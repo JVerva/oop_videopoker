@@ -6,7 +6,7 @@ public enum CmdAlias {
 	DEAL('d'),
 	HOLD('h'),
 	ADVICE('a'),
-	STATISTICS('s'),;
+	STATISTICS('s');
 
 	CmdAlias(char c) {
 		// TODO Auto-generated constructor stub
