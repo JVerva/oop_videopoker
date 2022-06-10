@@ -5,24 +5,28 @@ import java.util.ArrayList;
 import card.Card;
 
 public class Deck {
-	protected static ArrayList<Card> cardList;
-	protected static int cardCount;
+	public static ArrayList<Card> cardList = new ArrayList<Card>();
+	public static Integer cardCount = 0;
 	
 	public static void addCard(Card card) {
 		cardList.add(card);
+		cardCount++;
 	}
 	
 	public static void addCard(ArrayList<Card> cards) {
 		cardList.addAll(cards);
+		cardCount += cards.size();
 	}
 	
-	public static void removeCard(int pos) {
-		cardList.remove(pos);
+	public static void removeCard(Integer pos) {
+		cardList.remove(pos.intValue());
+		cardCount--;
 	}
 	
-	public static void removeCard(int[] pos) {
+	public static void removeCard(Integer[] pos) {
 		for(int i = 0; i<pos.length; i++)
-		cardList.remove(pos[i]);
+		cardList.remove(pos[i].intValue());
+		cardCount -= pos.length;
 	}
 
 	/**
@@ -35,7 +39,7 @@ public class Deck {
 	/**
 	 * @param cardCount the cardCount to set
 	 */
-	public static void setCardCount(int cardCount) {
+	public static void setCardCount(Integer cardCount) {
 		Deck.cardCount = cardCount;
 	}
 }

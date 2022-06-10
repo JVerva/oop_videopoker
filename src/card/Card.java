@@ -1,8 +1,8 @@
 package card;
 
 public class Card {
-	private Suit suit;
 	private Rank rank;
+	private Suit suit;
 	/**
 	 * @return the suit
 	 */
@@ -31,5 +31,12 @@ public class Card {
 	public Card(Rank rank, Suit suit) {
 		this.suit = suit;
 		this.rank = rank;
+	}
+	
+	public static Card stringToCard(String alias) {
+		Character r = Character.valueOf(alias.charAt(0));
+		Character s = Character.valueOf(alias.charAt(1));
+		
+		return new Card(Rank.getRank(r), Suit.getSuit(s));
 	}
 }
