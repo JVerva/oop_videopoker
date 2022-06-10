@@ -4,6 +4,9 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import card.Card;
+import deck.DeckDebug;
+import deck.DeckSim;
 import gamemode.GameModeAlias;
 
 public class Main {
@@ -20,7 +23,7 @@ public class Main {
 				getCmds(args[2]);
 				getDeck(args[3]);
 			}else{
-				
+				DeckSim.build();
 			}
 		
 		}catch(IllegalArgumentException e){
@@ -42,10 +45,9 @@ public class Main {
 	
 	private static void getCredit(String scredit) {
 		credit = Integer.parseInt(scredit);
-		Integer c = Integer.parseInt(scredit);
 	}
 	
-	private static void getDeck(String fileName) throws FileNotFoundException {
+	private static void getCmds(String fileName) throws FileNotFoundException {
 		try (Scanner sc = new Scanner(new File(fileName))){
 			while(sc.hasNext()) {
 				String line = sc.next();
@@ -57,13 +59,13 @@ public class Main {
 		}
 	}
 	
-	private static void getCmds(String fileName) throws FileNotFoundException {
+	private static void getDeck(String fileName) throws FileNotFoundException {
 		try (Scanner sc = new Scanner(new File(fileName))){
 			while(sc.hasNext()) {
 				String line = sc.next();
 				String[] tokens = line.split(" ");
-				for(int i = 0; i< tokens.length; i++) {
-					//get cards here
+				for(int i = 0; i < tokens.length; i++) {
+					DeckDebug.addCard(Card.stringToCard(tokens[i]));
 				}
 			}
 		}

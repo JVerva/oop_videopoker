@@ -2,7 +2,7 @@ package cmd;
 
 public class Cmd {
 	
-	public static void execute(CmdAlias alias, int[] params) throws IllegalArgumentException {
+	public static void execute(CmdAlias alias, Integer[] params) throws IllegalArgumentException {
 
 		if(alias == CmdAlias.HOLD)
 			hold(params);
@@ -12,7 +12,7 @@ public class Cmd {
 		
 	}
 	
-	public static void execute(CmdAlias alias, int param) throws IllegalArgumentException {
+	public static void execute(CmdAlias alias, Integer param) throws IllegalArgumentException {
 		
 		if(alias == CmdAlias.BET)
 			bet(param);
@@ -39,7 +39,7 @@ public class Cmd {
 		}
 	}
 	
-	public static void bet(int amount) {
+	public static void bet(Integer amount) {
 		
 	}
 	
@@ -51,7 +51,7 @@ public class Cmd {
 		
 	}
 	
-	public static void hold(int[] pos) {
+	public static void hold(Integer[] pos) {
 		
 	}
 	
