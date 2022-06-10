@@ -51,4 +51,37 @@ public enum Rank {
 			throw new IllegalArgumentException(c + " does not correspond to a rank");
 		}
 	}
+	
+	public static Rank getRank(int i) throws IllegalArgumentException{
+		switch(i) {
+		case 0:
+			return Rank.ACE;
+		case 1:
+			return Rank.TWO;
+		case 2:
+			return Rank.THREE;
+		case 3:
+			return Rank.FOUR;
+		case 4:
+			return Rank.FIVE;
+		case 5:
+			return Rank.SIX;
+		case 6:
+			return Rank.SEVEN;
+		case 7:
+			return Rank.EIGHT;
+		case 8:
+			return Rank.NINE;
+		case 9:
+			return Rank.TEN;
+		case 10:
+			return Rank.JACK;
+		case 11:
+			return Rank.QUEEN;
+		case 12:
+			return Rank.KING;
+		default :
+			throw new IllegalArgumentException(i + " does not correspond to a rank");
+		}
+	}
 }

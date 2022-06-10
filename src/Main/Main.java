@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import card.Card;
 import deck.DeckDebug;
+import deck.DeckSim;
 import gamemode.GameModeAlias;
 
 public class Main {
@@ -22,7 +23,7 @@ public class Main {
 				getCmds(args[2]);
 				getDeck(args[3]);
 			}else{
-				
+				DeckSim.build();
 			}
 		
 		}catch(IllegalArgumentException e){

@@ -20,9 +20,23 @@ public enum Suit {
 			return Suit.HEARTS;
 		case 'S':
 			return Suit.SPADES;
-
 		default :
 			throw new IllegalArgumentException(c + " does not correspond to a suit");
+		}
+	}
+	
+	public static Suit getSuit(int i) throws IllegalArgumentException{
+		switch(1) {
+		case 0:
+			return Suit.DIAMONDS;
+		case 1:
+			return Suit.CLUBS;
+		case 2:
+			return Suit.HEARTS;
+		case 3:
+			return Suit.SPADES;
+		default :
+			throw new IllegalArgumentException(1 + " does not correspond to a suit");
 		}
 	}
 }

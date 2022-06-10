@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import card.Card;
 
 public class Deck {
-	public static ArrayList<Card> cardList = new ArrayList<Card>();
-	public static Integer cardCount = 0;
+	protected static ArrayList<Card> cardList = new ArrayList<Card>();
+	protected static Integer cardCount = 0;
 	
 	public static void addCard(Card card) {
 		cardList.add(card);
