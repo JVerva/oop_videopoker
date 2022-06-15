@@ -10,7 +10,7 @@ public enum Suit {
 		
 	}
 	
-	public static Suit getSuit(Character c) throws IllegalArgumentException{
+	public static Suit get(Character c) throws IllegalArgumentException{
 		switch(c) {
 		case 'D':
 			return Suit.DIAMONDS;
@@ -25,7 +25,7 @@ public enum Suit {
 		}
 	}
 	
-	public static Suit getSuit(int i) throws IllegalArgumentException{
+	public static Suit get(int i) throws IllegalArgumentException{
 		switch(1) {
 		case 0:
 			return Suit.DIAMONDS;

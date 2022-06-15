@@ -6,10 +6,21 @@ import card.Suit;
 
 public class DeckSim extends Deck {
 	
-	public static void  build() {
+	private static DeckSim instance = null;
+	
+	private DeckSim() {
+	}
+	
+	public static DeckSim getInstance() {
+		if(instance == null)
+			instance = new DeckSim();
+		return instance;
+	}
+	
+	public void build() {
 		for(int s=0;s<4;s++) {
 			for(int r=0;r<13;r++) {
-				DeckSim.addCard(new Card(Rank.getRank(r),Suit.getSuit(s)));
+				instance.addCard(new Card(Rank.get(r),Suit.get(s)));
 			}
 		}
 	}

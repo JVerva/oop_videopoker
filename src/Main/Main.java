@@ -1,35 +1,31 @@
 package Main;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Scanner;
 
-import card.Card;
-import deck.DeckDebug;
 import deck.DeckSim;
+import gamemode.Debug;
 import gamemode.GameModeAlias;
 
 public class Main {
 	
-	static GameModeAlias gameMode;
-	static Integer credit;
-	static ArrayList<String> cmds = new ArrayList<String>();
+	public static GameModeAlias gameMode;
+	public static Integer credit;
 	
 	public static void main(String[] args) {
 		try {
 			getGameMode(args[0]);
 			getCredit(args[1]);
 			if(gameMode == GameModeAlias.DEBUG) {
-				getCmds(args[2]);
-				getDeck(args[3]);
+				Debug.play(args[2], args[3]);
 			}else{
-				DeckSim.build();
+				DeckSim.getInstance().build();
 			}
 		
 		}catch(IllegalArgumentException e){
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
 		}catch(FileNotFoundException e) {
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
+		}catch(IndexOutOfBoundsException e) {
+			System.err.println(e.getMessage());
 		}
 	}
 	
@@ -45,30 +41,6 @@ public class Main {
 	
 	private static void getCredit(String scredit) {
 		credit = Integer.parseInt(scredit);
-	}
-	
-	private static void getCmds(String fileName) throws FileNotFoundException {
-		try (Scanner sc = new Scanner(new File(fileName))){
-			while(sc.hasNext()) {
-				String line = sc.next();
-				String[] tokens = line.split(" ");
-				for(int i = 0; i< tokens.length; i++) {
-					cmds.add(tokens[i]);
-				}
-			}
-		}
-	}
-	
-	private static void getDeck(String fileName) throws FileNotFoundException {
-		try (Scanner sc = new Scanner(new File(fileName))){
-			while(sc.hasNext()) {
-				String line = sc.next();
-				String[] tokens = line.split(" ");
-				for(int i = 0; i < tokens.length; i++) {
-					DeckDebug.addCard(Card.stringToCard(tokens[i]));
-				}
-			}
-		}
 	}
 	
 }
