@@ -37,6 +37,6 @@ public class Card {
 		Character r = Character.valueOf(alias.charAt(0));
 		Character s = Character.valueOf(alias.charAt(1));
 		
-		return new Card(Rank.getRank(r), Suit.getSuit(s));
+		return new Card(Rank.get(r), Suit.get(s));
 	}
 }

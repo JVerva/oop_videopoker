@@ -1,25 +1,21 @@
 package card;
 
 public enum Rank {
-	ACE(1),
-	TWO(2),
-	THREE(3),
-	FOUR(4),
-	FIVE(5),
-	SIX(6),
-	SEVEN(7),
-	EIGHT(8),
-	NINE(9),
-	TEN(10),
-	JACK(11),
-	QUEEN(12),
-	KING(13);
+	ACE,
+	TWO,
+	THREE,
+	FOUR,
+	FIVE,
+	SIX,
+	SEVEN,
+	EIGHT,
+	NINE,
+	TEN,
+	JACK,
+	QUEEN,
+	KING;
 	
-	Rank(int ranki) {
-		
-	}
-	
-	public static Rank getRank(Character c) throws IllegalArgumentException{
+	public static Rank get(Character c) throws IllegalArgumentException{
 		switch(c) {
 		case 'A':
 			return Rank.ACE;
@@ -52,7 +48,7 @@ public enum Rank {
 		}
 	}
 	
-	public static Rank getRank(int i) throws IllegalArgumentException{
+	public static Rank get(int i) throws IllegalArgumentException{
 		switch(i) {
 		case 0:
 			return Rank.ACE;
@@ -83,5 +79,37 @@ public enum Rank {
 		default :
 			throw new IllegalArgumentException(i + " does not correspond to a rank");
 		}
+	}
+	
+	public int getInt(){
+		switch(this) {
+		case ACE:
+			return 1;
+		case TWO:
+			return 2;
+		case THREE:
+			return 3;
+		case FOUR:
+			return 4;
+		case FIVE:
+			return 5;
+		case SIX:
+			return 6;
+		case SEVEN:
+			return 7;
+		case EIGHT:
+			return 8;
+		case NINE:
+			return 9;
+		case TEN:
+			return 10;
+		case JACK:
+			return 11;
+		case QUEEN:
+			return 12;
+		case KING:
+			return 13;
+		}
+		return 0;
 	}
 }
