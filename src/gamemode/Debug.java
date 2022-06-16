@@ -9,7 +9,7 @@ import cmd.Cmd;
 import cmd.CmdAlias;
 import deck.DeckDebug;
 
-public class Debug implements GameMode {
+public class Debug {
 	
 	static ArrayList<String> cmds = new ArrayList<String>();
 	

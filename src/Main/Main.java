@@ -1,9 +1,10 @@
 package Main;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
-import deck.DeckSim;
 import gamemode.Debug;
 import gamemode.GameModeAlias;
+import gamemode.Simulation;
 
 public class Main {
 	
@@ -17,7 +18,7 @@ public class Main {
 			if(gameMode == GameModeAlias.DEBUG) {
 				Debug.play(args[2], args[3]);
 			}else{
-				DeckSim.getInstance().build();
+				Simulation.play(args[2], args[3]);
 			}
 		
 		}catch(IllegalArgumentException e){
@@ -25,6 +26,8 @@ public class Main {
 		}catch(FileNotFoundException e) {
 			System.err.println(e.getMessage());
 		}catch(IndexOutOfBoundsException e) {
+			System.err.println(e.getMessage());
+		}catch(IOException e) {
 			System.err.println(e.getMessage());
 		}
 	}

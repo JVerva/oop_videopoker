@@ -1,5 +1,6 @@
 package cmd;
 
+import java.util.Arrays;
 import java.util.Random;
 
 import Main.Main;
@@ -58,23 +59,26 @@ public class Cmd {
 		}
 		
 		switch(cmd) {
-		case BET:
-			bet(5);
-		break;
-		case CREDIT:
-			credit();
-		break;
-		case DEAL:
-			deal();
-		break;
-		case ADVICE:
-			advice();
-		break;
-		case STATISTICS:
-			statistics();
-		break;
-		default:
-			throw new IllegalArgumentException(String.valueOf(cmd.getAlias()) + " has to recieve arguments.");
+			case BET:
+				bet(5);
+			break;
+			case CREDIT:
+				credit();
+			break;
+			case DEAL:
+				deal();
+			break;
+			case ADVICE:
+				advice();
+			break;
+			case STATISTICS:
+				statistics();
+			break;
+			case HOLD:
+				hold();
+			break;
+			default:
+				throw new IllegalArgumentException(String.valueOf(cmd.getAlias()) + " has to recieve arguments.");
 		}
 	}
 	
@@ -82,13 +86,20 @@ public class Cmd {
 		System.out.println("exectuting bet");
 		if(amount > 0 && amount < 6) {
 			Hand.setBet(amount);
+			System.out.println("player is betting " + amount);
+		}else {
+		System.err.println("b: illegal command");
 		}
 		Cmd.blockedCmds = new CmdAlias[] {CmdAlias.ADVICE, CmdAlias.HOLD};
+		if(Main.gameMode==GameModeAlias.SIMULATION) {
+			 Cmd.blockedCmds = Arrays.copyOf(Cmd.blockedCmds,  Cmd.blockedCmds.length + 1);
+			 Cmd.blockedCmds[Cmd.blockedCmds.length - 1] = CmdAlias.BET; 
+		}
 	}
 	
 	public static void credit() {
 		System.out.println("exectuting credit");
-		System.out.println(Main.credit);
+		System.out.println("player's credit is " +Main.credit);
 	}
 	
 	public static void deal() throws IndexOutOfBoundsException{
@@ -124,12 +135,40 @@ public class Cmd {
 				Hand.getInstance().cardList.set(pos[i], DeckDebug.getInstance().removeCard(Integer.valueOf(rn.nextInt(n))));
 			}
 		}
+		System.out.print("Player's Hand ");
+		Hand.printDeck();
 		Hand.evaluate();
+		if(Main.gameMode==GameModeAlias.SIMULATION) {
+			 Cmd.blockedCmds = Arrays.copyOf(Cmd.blockedCmds,  Cmd.blockedCmds.length + 1);
+			 Cmd.blockedCmds[Cmd.blockedCmds.length - 1] = CmdAlias.BET; 
+		}
 	}
 	
-	public static void advice() {
+	public static void hold() throws IllegalArgumentException{
+		System.out.println("exectuting hold");
+		Cmd.blockedCmds = new CmdAlias[] {CmdAlias.ADVICE, CmdAlias.HOLD, CmdAlias.DEAL};
+		if(Main.gameMode == GameModeAlias.DEBUG) {
+			for(int i = 0; i<Hand.getInstance().getCardCount(); i++) {
+				Hand.getInstance().cardList.set(i, DeckDebug.getInstance().removeCard(Integer.valueOf(0)));
+			}
+		}else {
+			for(int i = 0; i<Hand.getInstance().getCardCount(); i++) {
+				Random rn = new Random();
+				int n = DeckSim.getInstance().getCardCount() + 1;
+				Hand.getInstance().cardList.set(i, DeckDebug.getInstance().removeCard(Integer.valueOf(rn.nextInt(n))));
+			}
+		}
+		Hand.evaluate();
+		if(Main.gameMode==GameModeAlias.SIMULATION) {
+			 Cmd.blockedCmds = Arrays.copyOf(Cmd.blockedCmds,  Cmd.blockedCmds.length + 1);
+			 Cmd.blockedCmds[Cmd.blockedCmds.length - 1] = CmdAlias.BET; 
+		}
+	}
+	
+	public static Integer[] advice() {
 		System.out.println("exectuting advice");
 		Cmd.blockedCmds = new CmdAlias[] {CmdAlias.ADVICE, CmdAlias.BET, CmdAlias.DEAL};
+		return null;
 	}
 	
 	public static void statistics() {

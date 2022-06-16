@@ -1,6 +1,7 @@
 package deck;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import card.Card;
 import card.Rank;
@@ -53,6 +54,10 @@ public class Deck {
 		}
 	}
 
+	public void shuffle() {
+		Collections.shuffle(cardList);
+	}
+	
 	/**
 	 * @return the cardCount
 	 */

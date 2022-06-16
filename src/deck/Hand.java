@@ -1,8 +1,4 @@
 package deck;
-
-import card.Card;
-import card.Rank;
-import card.Suit;
 import strategy.PokerHand;
 
 public class Hand extends Deck{
@@ -16,14 +12,6 @@ public class Hand extends Deck{
 		if(instance == null)
 			instance = new Hand();
 		return instance;
-	}
-	
-	public void build() {
-		for(int s=0;s<4;s++) {
-			for(int r=0;r<13;r++) {
-				instance.addCard(new Card(Rank.get(r),Suit.get(s)));
-			}
-		}
 	}
 	
 	private static Integer bet = 5;
@@ -49,6 +37,11 @@ public class Hand extends Deck{
 		    }
 		 return null;
 		}
+
+	public static void printDeck() {
+		
+		
+	}
 	 
 }
 	
