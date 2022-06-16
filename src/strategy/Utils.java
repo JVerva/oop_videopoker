@@ -90,4 +90,40 @@ public static boolean isFlush(String type, List<Card> hand) {
 
 	
 }
+
+
+public static boolean isThreeOfAKind(List<Card> hand){
+	HashMap<Integer,Integer> rankMap = new HashMap<>();
+
+	for(Card card : hand){
+		if(!rankMap.containsKey(card.getRank().getValue())){
+			rankMap.put(card.getRank().getValue(), 1);
+		}
+		else{
+			int value = rankMap.get(card.getRank().getValue());
+			rankMap.put(card.getRank().getValue(), value+1);
+		}
+	}
+
+	return rankMap.containsValue(3);
+}
+
+public static boolean isTwoPair(List<Card> hand){
+	HashMap<Integer,Integer> rankMap = new HashMap<>();
+	int pairCounter = 0;
+
+	for(Card card : hand){
+		if(!rankMap.containsKey(card.getRank().getValue())){
+			rankMap.put(card.getRank().getValue(), 1);
+		}
+		else{
+			int value = rankMap.get(card.getRank().getValue());
+			rankMap.put(card.getRank().getValue(), value+1);
+			pairCounter++;
+		}
+	}
+
+	return pairCounter == 2 && rankMap.containsValue(1);
+}
+
 }

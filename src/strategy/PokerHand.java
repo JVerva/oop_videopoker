@@ -1,6 +1,10 @@
 package strategy;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import card.Card;
 
@@ -89,15 +93,33 @@ public enum PokerHand {
 			public
 			boolean matches(List<Card> hand) {
 
-				for (int i = 1; i < hand.size(); i++) {
-					if (
-							hand.get(i).getRank().getValue() != hand.get(i - 1).getRank().getValue() + 1
-							) {
-						return false;
-					}
-				}
+//		    	int firstCardSuit = playerHand.get(0).getSuit();
+		    	List<Integer> sortedCardRanks = new ArrayList<>();
+		    	List<Integer> cardSuits = new ArrayList<>();
 
-				return true;
+		    	//Create an Integer list containing all the player's ranks
+		    	for(Card card : hand){
+		    		sortedCardRanks.add(card.getRank().getValue());
+		    		cardSuits.add(card.getSuit().getValue());
+		    	}
+
+		    	//Sort the ranks
+		    	Collections.sort(sortedCardRanks);
+
+		    	//Check to see that all card suits are not identical
+		    	Set<Integer> suitSet = new HashSet<>(cardSuits);
+
+		    	//If set size is smaller, there are duplicates, meaning more than one suit, which a Straight requires
+		    	if(suitSet.size() > cardSuits.size())
+		    		return false;
+
+		    	//Go Step by step to see if the next card's rank is only 1 more than it
+		    	for(int i = 0; i < 4; i++){
+		    		if(!(sortedCardRanks.get(i) == (sortedCardRanks.get(i+1) - 1)))
+		    			return false;
+		    	}
+
+		    	return true;
 			}
 		},
 
@@ -107,6 +129,7 @@ public enum PokerHand {
 			public
 			boolean matches(List<Card> hand) {
 				// TODO Auto-generated method stub
+				Utils.isThreeOfAKind(hand);
 				return false;
 			}
 
@@ -118,6 +141,7 @@ public enum PokerHand {
 			public
 			boolean matches(List<Card> hand) {
 				// TODO Auto-generated method stub
+				Utils.isTwoPair(hand);
 				return false;
 			}
 
@@ -129,7 +153,12 @@ public enum PokerHand {
 			public
 			boolean matches(List<Card> hand) {
 				// TODO Auto-generated method stub
+				for(Card card : hand) {
+					if(card.getRank().getValue()>10)
+						return true;
+				}
 				return false;
+					
 			}
 			
 
