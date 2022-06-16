@@ -39,4 +39,5 @@ public class Card {
 		
 		return new Card(Rank.get(r), Suit.get(s));
 	}
+	
 }
