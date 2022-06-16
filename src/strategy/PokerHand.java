@@ -131,8 +131,15 @@ public enum PokerHand {
 				// TODO Auto-generated method stub
 				return false;
 			}
+			
 
-
+		},
+		NONE {
+			@Override
+			public boolean matches(List<Card> hand) {
+				// TODO Auto-generated method stub
+				return true;
+			}
 		};
 
 		public abstract boolean matches(List<Card> hand);
