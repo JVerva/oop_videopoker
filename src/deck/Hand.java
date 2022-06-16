@@ -30,7 +30,7 @@ public class Hand extends Deck{
 		Hand.bet = bet;
 	}
 	
-	public static PokerHand evaluate() {
+	public PokerHand evaluate() {
 		 for(PokerHand potential : PokerHand.values()) {
 		        if (potential.matches(Hand.getInstance().cardList))
 		        	return potential;
@@ -38,9 +38,10 @@ public class Hand extends Deck{
 		 return null;
 		}
 
-	public static void printDeck() {
-		
-		
+	public void print() {
+		for(int i = 0; i<Hand.getInstance().cardCount; i++) {
+			System.out.print(Hand.getInstance().cardList.get(i).getRank().getChar().toString() + Hand.getInstance().cardList.get(i).getSuit().getChar().toString()+ " ");
+		}
 	}
 	 
 }

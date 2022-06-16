@@ -1,13 +1,16 @@
 package cmd;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
 import Main.Main;
+import card.Card;
 import deck.DeckDebug;
 import deck.DeckSim;
 import deck.Hand;
 import gamemode.GameModeAlias;
+import strategy.PokerHand;
 
 public class Cmd {
 	
@@ -83,12 +86,11 @@ public class Cmd {
 	}
 	
 	public static void bet(Integer amount) {
-		System.out.println("exectuting bet");
 		if(amount > 0 && amount < 6) {
 			Hand.setBet(amount);
 			System.out.println("player is betting " + amount);
 		}else {
-		System.err.println("b: illegal command");
+		System.err.println("b: illegal amount");
 		}
 		Cmd.blockedCmds = new CmdAlias[] {CmdAlias.ADVICE, CmdAlias.HOLD};
 		if(Main.gameMode==GameModeAlias.SIMULATION) {
@@ -98,55 +100,81 @@ public class Cmd {
 	}
 	
 	public static void credit() {
-		System.out.println("exectuting credit");
 		System.out.println("player's credit is " +Main.credit);
 	}
 	
 	public static void deal() throws IndexOutOfBoundsException{
-		System.out.println("exectuting deal");
 		if(Main.gameMode == GameModeAlias.DEBUG) {
-			Hand.getInstance().cardList = DeckDebug.getInstance().removeCard(new Integer[] {0,1,2,3,4});
+				ArrayList<Card> cList = new ArrayList<Card>();
+				for(int i = 0; i < 5; i++) {
+					cList.add(DeckDebug.getInstance().removeCard(0));
+				}
+				Hand.getInstance().addCard(cList);
 		}else {
 			Random rn = new Random();
 			int n = DeckSim.getInstance().getCardCount() + 1;
 			Integer[] rand = new Integer[] {rn.nextInt(n), rn.nextInt(n), rn.nextInt(n), rn.nextInt(n), rn.nextInt(n)};
-			Hand.getInstance().cardList = DeckSim.getInstance().removeCard(rand);
+			ArrayList<Card> cList = DeckSim.getInstance().removeCard(rand);
+			Hand.getInstance().addCard(cList);
 		}
+		Hand.getInstance().print();
+		System.out.println();
 		Cmd.blockedCmds = new CmdAlias[] {CmdAlias.BET, CmdAlias.DEAL};
 	}
 	
 	public static void hold(Integer[] pos) throws IllegalArgumentException{
-		System.out.println("exectuting hold");
 		Cmd.blockedCmds = new CmdAlias[] {CmdAlias.ADVICE, CmdAlias.HOLD, CmdAlias.DEAL};
+		
+		Integer ipos[] = new Integer[Hand.getInstance().getCardCount()-pos.length];
+		int j = 0;
+		int k = 0;
+		for(int i = 0; i<Hand.getInstance().getCardCount(); i++){
+			if(i!=pos[j]-1) {
+				ipos[k] = i;
+				k++;
+			}else {
+				if(j<pos.length-1)
+					j++;
+			}
+		}
+		
 		if(Main.gameMode == GameModeAlias.DEBUG) {
+			
 			for(int i = 0; i<pos.length; i++) {
 				if(pos[i]>4) {
 					throw new IllegalArgumentException("Invalid card position:" + pos[i].toString());
 				}
-				Hand.getInstance().cardList.set(pos[i]-1, DeckDebug.getInstance().removeCard(Integer.valueOf(0)));
 			}
-		}else {
-			for(int i = 0; i<pos.length; i++) {
+			for(int i = 0; i<ipos.length; i++) {
+					Hand.getInstance().cardList.set(ipos[i], DeckDebug.getInstance().removeCard(Integer.valueOf(0)));
+			}
+			
+		}else{
+			for(int i = 0; i<Hand.getInstance().getCardCount(); i++) {
 				if(pos[i]>4) {
 					throw new IllegalArgumentException("Invalid card position:" + pos[i].toString());
 				}
 				Random rn = new Random();
 				int n = DeckSim.getInstance().getCardCount() + 1;
-				Hand.getInstance().cardList.set(pos[i], DeckDebug.getInstance().removeCard(Integer.valueOf(rn.nextInt(n))));
+					Hand.getInstance().cardList.set(ipos[i], DeckDebug.getInstance().removeCard(Integer.valueOf(rn.nextInt(n))));
 			}
 		}
-		System.out.print("Player's Hand ");
-		Hand.printDeck();
-		Hand.evaluate();
+		
 		if(Main.gameMode==GameModeAlias.SIMULATION) {
 			 Cmd.blockedCmds = Arrays.copyOf(Cmd.blockedCmds,  Cmd.blockedCmds.length + 1);
 			 Cmd.blockedCmds[Cmd.blockedCmds.length - 1] = CmdAlias.BET; 
 		}
+		
+		System.out.print("Player's Hand ");
+		Hand.getInstance().print();
+		System.out.println();
+		PokerHand score = Hand.getInstance().evaluate();
+		Hand.getInstance().clear();
 	}
 	
 	public static void hold() throws IllegalArgumentException{
-		System.out.println("exectuting hold");
 		Cmd.blockedCmds = new CmdAlias[] {CmdAlias.ADVICE, CmdAlias.HOLD, CmdAlias.DEAL};
+		
 		if(Main.gameMode == GameModeAlias.DEBUG) {
 			for(int i = 0; i<Hand.getInstance().getCardCount(); i++) {
 				Hand.getInstance().cardList.set(i, DeckDebug.getInstance().removeCard(Integer.valueOf(0)));
@@ -158,20 +186,22 @@ public class Cmd {
 				Hand.getInstance().cardList.set(i, DeckDebug.getInstance().removeCard(Integer.valueOf(rn.nextInt(n))));
 			}
 		}
-		Hand.evaluate();
 		if(Main.gameMode==GameModeAlias.SIMULATION) {
 			 Cmd.blockedCmds = Arrays.copyOf(Cmd.blockedCmds,  Cmd.blockedCmds.length + 1);
 			 Cmd.blockedCmds[Cmd.blockedCmds.length - 1] = CmdAlias.BET; 
 		}
+		System.out.print("Player's Hand ");
+		Hand.getInstance().print();
+		System.out.println();
+		PokerHand score = Hand.getInstance().evaluate();
+		Hand.getInstance().clear();
 	}
 	
 	public static Integer[] advice() {
-		System.out.println("exectuting advice");
 		Cmd.blockedCmds = new CmdAlias[] {CmdAlias.ADVICE, CmdAlias.BET, CmdAlias.DEAL};
 		return null;
 	}
 	
 	public static void statistics() {
-		System.out.println("exectuting statistics");
 	}
 }

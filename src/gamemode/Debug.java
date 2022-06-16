@@ -17,18 +17,26 @@ public class Debug {
 		Debug.getCmds(cmdFileName);
 		DeckDebug.getInstance().build(deckFileName);
 		for(int i=0; i<cmds.size(); i++) {
+			System.out.print("-cmd " + cmds.get(i).charAt(0));
 			CmdAlias cmd = CmdAlias.getCmd(cmds.get(i).charAt(0));
 			if(cmd.equals(CmdAlias.BET)){
 				try {
 					Integer param = Integer.parseInt(cmds.get(i+1));
+					System.out.println(" " + param.toString());
 					Cmd.execute(cmd, param);
 					i++;
 				}catch(NumberFormatException e) {
+					System.out.println();
 					Cmd.execute(cmd);
 				}
 			}else if(cmd.equals(CmdAlias.HOLD)) {
 				try {
 					Integer[] param = new Integer[]{Integer.parseInt(cmds.get(i+1)), Integer.parseInt(cmds.get(i+2))};
+					System.out.print(" ");
+					for(int j = 0; j<param.length; j++) {
+						System.out.print(param[j] + " ");
+					}
+					System.out.println();
 					Cmd.execute(cmd, param);
 					i++;
 					i++;
@@ -36,8 +44,10 @@ public class Debug {
 					Cmd.execute(cmd);
 				}
 			}else {
+				System.out.println();
 				Cmd.execute(cmd);
 			}
+			System.out.println();
 		}
 	}
 

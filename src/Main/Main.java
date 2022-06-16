@@ -25,8 +25,7 @@ public class Main {
 			System.err.println(e.getMessage());
 		}catch(FileNotFoundException e) {
 			System.err.println(e.getMessage());
-		}catch(IndexOutOfBoundsException e) {
-			System.err.println(e.getMessage());
+		
 		}catch(IOException e) {
 			System.err.println(e.getMessage());
 		}

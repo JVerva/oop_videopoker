@@ -42,6 +42,20 @@ public enum Suit {
 		}
 	}
 	
+	public Character getChar(){
+		switch(this) {
+		case DIAMONDS:
+			return 'D';
+		case HEARTS:
+			return 'H';
+		case CLUBS:
+			return 'C';
+		case SPADES:
+			return 'S';
+		}
+		return 0;
+	}
+	
 	public int getValue() {
         return value;
     }

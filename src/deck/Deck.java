@@ -26,7 +26,7 @@ public class Deck {
 	
 	public void addCard(ArrayList<Card> cards) {
 		cardList.addAll(cards);
-		cardCount += cards.size();
+		cardCount = cardCount + cards.size();
 	}
 	
 	public Card removeCard(Integer pos) throws IndexOutOfBoundsException {
@@ -63,5 +63,10 @@ public class Deck {
 	 */
 	public int getCardCount() {
 		return this.cardCount;
+	}
+	
+	public void clear() {
+		cardList.clear();
+		cardCount = 0;
 	}
 }
