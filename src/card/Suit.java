@@ -6,9 +6,11 @@ public enum Suit {
 	HEARTS(3),
 	SPADES(4);
 	
-	Suit(int suit) {
-		
-	}
+    private Suit(int value) {
+        this.value = value; 
+    }
+	
+	private int value;
 	
 	public static Suit get(Character c) throws IllegalArgumentException{
 		switch(c) {
@@ -39,4 +41,8 @@ public enum Suit {
 			throw new IllegalArgumentException(1 + " does not correspond to a suit");
 		}
 	}
+	
+	public int getValue() {
+        return value;
+    }
 }

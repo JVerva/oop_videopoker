@@ -3,6 +3,7 @@ package deck;
 import card.Card;
 import card.Rank;
 import card.Suit;
+import strategy.PokerHand;
 
 public class Hand extends Deck{
 	
@@ -41,8 +42,12 @@ public class Hand extends Deck{
 		Hand.bet = bet;
 	}
 	
-	public static int evaluate() {
-		return 0;
+	public static PokerHand evaluate() {
+		 for(PokerHand potential : PokerHand.values()) {
+		        if (potential.matches(Hand.getInstance().cardList))
+		        	return potential;
+		    }
+		 return null;
 		}
 	 
 }
