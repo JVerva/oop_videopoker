@@ -31,13 +31,13 @@ public class Main {
 	}
 	
 	private static void getGameMode(String alias) throws IllegalArgumentException{
-		if(alias.equals("-d")) {
-			gameMode = GameModeAlias.DEBUG;
-		}else if(alias.equals("-s")) {
-			gameMode = GameModeAlias.SIMULATION;
-		}else {
-			throw new IllegalArgumentException(alias + " does not correspond to a game mode");
+		for(GameModeAlias potential : GameModeAlias.values()) {
+			if(potential.getAlias().equals(alias)) {
+				gameMode = potential;
+				return;
+			}
 		}
+			throw new IllegalArgumentException(alias + " does not correspond to a game mode");
 	}
 	
 	private static void getCredit(String scredit) {

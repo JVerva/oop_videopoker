@@ -16,9 +16,12 @@ public class Debug {
 	public static void play(String cmdFileName, String deckFileName) throws FileNotFoundException, IndexOutOfBoundsException {
 		Debug.getCmds(cmdFileName);
 		Deck.build(deckFileName);
+		
 		for(int i=0; i<cmds.size(); i++) {
+			
 			System.out.print("-cmd " + cmds.get(i).charAt(0));
 			CmdAlias cmd = CmdAlias.getCmd(cmds.get(i).charAt(0));
+			
 			if(cmd.equals(CmdAlias.BET)||cmd.equals(CmdAlias.HOLD)){
 				ArrayList<Integer> param = new ArrayList<Integer>();
 				try {
@@ -43,6 +46,7 @@ public class Debug {
 			}
 			System.out.println();
 		}
+		
 	}
 
 	public static void getCmds(String fileName) throws FileNotFoundException {

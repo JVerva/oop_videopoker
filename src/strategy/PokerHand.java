@@ -129,8 +129,7 @@ public enum PokerHand {
 			public
 			boolean matches(List<Card> hand) {
 				// TODO Auto-generated method stub
-				Utils.isThreeOfAKind(hand);
-				return false;
+				return Utils.isThreeOfAKind(hand);
 			}
 
 		},
@@ -141,8 +140,7 @@ public enum PokerHand {
 			public
 			boolean matches(List<Card> hand) {
 				// TODO Auto-generated method stub
-				Utils.isTwoPair(hand);
-				return false;
+				return Utils.isTwoPair(hand);
 			}
 
 		},
@@ -173,4 +171,5 @@ public enum PokerHand {
 		};
 
 		public abstract boolean matches(List<Card> hand);
+		
 	}

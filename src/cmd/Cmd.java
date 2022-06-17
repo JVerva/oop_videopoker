@@ -13,6 +13,8 @@ import strategy.PokerHand;
 
 public class Cmd {
 	
+	private static Integer stats[] = new Integer[] {0,0,0,0,0,0,0,0,0,0,0,0,0};
+	
 	private static CmdAlias[] blockedCmds =  new CmdAlias[] {CmdAlias.ADVICE, CmdAlias.HOLD, CmdAlias.DEAL};
 	
 	public static void execute(CmdAlias cmd, ArrayList<Integer> params) throws IllegalArgumentException, IndexOutOfBoundsException {
@@ -75,7 +77,7 @@ public class Cmd {
 			Hand.setBet(amount);
 			System.out.println("player is betting " + amount);
 		}else {
-		System.err.println("b: illegal amount");
+			System.err.println("b: illegal amount");
 		}
 		Cmd.blockedCmds = new CmdAlias[] {CmdAlias.ADVICE, CmdAlias.HOLD};
 		if(Main.gameMode==GameModeAlias.SIMULATION) {
@@ -136,6 +138,8 @@ public class Cmd {
 		Hand.print();
 		System.out.println();
 		PokerHand score = Hand.evaluate();
+		addToStats(score);
+		printScore(score);
 		Hand.clear();
 	}
 	
@@ -161,6 +165,8 @@ public class Cmd {
 		Hand.print();
 		System.out.println();
 		PokerHand score = Hand.evaluate();
+		printScore(score);
+		addToStats(score);
 		Hand.clear();
 	}
 	
@@ -170,5 +176,26 @@ public class Cmd {
 	}
 	
 	public static void statistics() {
+		System.out.println("Hand			Nb");
+		System.out.println("--------------------------");
+		for(PokerHand potential : PokerHand.values()) {
+			System.out.println(potential.toString() + "	    " + stats[potential.ordinal()].toString());
+		}
+		System.out.println("--------------------------");
+		System.out.println("Total		" + stats[stats.length-1].toString());
+	}
+	
+	public static void printScore(PokerHand score) {
+		if(score.equals(PokerHand.NONE))
+			System.out.print("player loses ");
+		else
+			System.out.print("player wins with a " + score.toString() + " ");
+		
+		System.out.println("and his credit is " + Main.credit.toString());
+	}
+	
+	private static void addToStats(PokerHand h) {
+		Cmd.stats[h.ordinal()]++;
+		Cmd.stats[12]++;
 	}
 }
