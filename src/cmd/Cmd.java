@@ -76,6 +76,7 @@ public class Cmd {
 		if(amount > 0 && amount < 6) {
 			Hand.setBet(amount);
 			System.out.println("player is betting " + amount);
+			Main.credit -= amount;
 		}else {
 			System.err.println("b: illegal amount");
 		}
@@ -138,8 +139,9 @@ public class Cmd {
 		Hand.print();
 		System.out.println();
 		PokerHand score = Hand.evaluate();
-		addToStats(score);
-		printScore(score);
+		Cmd.updateCredit(score);
+		Cmd.addToStats(score);
+		Cmd.printScore(score);
 		Hand.clear();
 	}
 	
@@ -165,8 +167,9 @@ public class Cmd {
 		Hand.print();
 		System.out.println();
 		PokerHand score = Hand.evaluate();
-		printScore(score);
-		addToStats(score);
+		Cmd.updateCredit(score);
+		Cmd.printScore(score);
+		Cmd.addToStats(score);
 		Hand.clear();
 	}
 	
@@ -197,5 +200,13 @@ public class Cmd {
 	private static void addToStats(PokerHand h) {
 		Cmd.stats[h.ordinal()]++;
 		Cmd.stats[12]++;
+	}
+	
+	private static void updateCredit(PokerHand score) {
+		if(score.equals(PokerHand.ROYAL_FLUSH)&&Hand.getBet().equals(5)) {
+			Main.credit += 4000;
+		}else {
+			Main.credit += Hand.getBet()*Main.multiplier[score.ordinal()];
+		}
 	}
 }
