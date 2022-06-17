@@ -126,4 +126,60 @@ public static boolean isTwoPair(List<Card> hand){
 	return pairCounter == 2 && rankMap.containsValue(1);
 }
 
+public static List<Integer> fourToRoyalFlush(List<Card> hand){
+	
+	List<Integer> list = Arrays.asList(1,10,11,12,13);
+	
+	List<Integer> positionList = new ArrayList<>();
+	
+	int suit = 0;
+	
+	int position=0;
+	
+	
+	for(Card card : hand){
+			
+		if(list.contains(card.getRank().getValue()))
+			if(suit==0) {
+				suit=card.getSuit().getValue();
+				positionList.add(position);
+			} else if(card.getSuit().getValue()==suit) {
+				positionList.add(position);
+			}
+		position++;
+	}
+	
+	if(positionList.size()<3) {
+		positionList.clear();
+		return positionList;
+	}
+	
+	return positionList;
+	
+	
+}
+
+
+//public boolean isFourToRoyalFlush(List<Card> hand){
+//	
+//	int suit = hand.get(0).getSuit().getValue();
+//	
+//	for(Card card : hand){
+//		if(card.getSuit().getValue() != suit || !list.contains(card.getRank().getValue()))
+//			return false;
+//	}
+//}
+//	
+//	for(Card card : hand){
+//		
+//		if(list.contains(card.getRank().getValue()))
+//			if(suit==0) {
+//				suit=card.getSuit().getValue();
+//				positionList.add(position);
+//			} else if(card.getSuit().getValue()==suit) {
+//				positionList.add(position);
+//			}
+//		position++;
+//	}
+
 }
