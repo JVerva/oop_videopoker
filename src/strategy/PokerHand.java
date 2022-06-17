@@ -151,11 +151,13 @@ public enum PokerHand {
 			public
 			boolean matches(List<Card> hand) {
 				// TODO Auto-generated method stub
-				for(Card card : hand) {
-					if(card.getRank().getValue()>10)
-						return true;
-				}
-				return false;
+				return Utils.isJacksOrBetter(hand);
+				
+//				for(Card card : hand) {
+//					if(card.getRank().getValue()>10)
+//						return true;
+//				}
+//				return false;
 					
 			}
 			

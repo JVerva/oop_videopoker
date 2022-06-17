@@ -139,7 +139,7 @@ public static boolean isJacksOrBetter(List<Card> hand){
 		else{
 			int value = rankMap.get(card.getRank().getValue());
 			rankMap.put(card.getRank().getValue(), value+1);
-			if(card.getRank().getValue()>10)
+			if(card.getRank().getValue()>10 || card.getRank().getValue()==1)
 				pairCounter++;
 		}
 	}
