@@ -16,6 +16,7 @@ public class Simulation {
 		
 		for(int i = 0; i < nbets; i++) {
 			Cmd.bet(bet);
+			Cmd.deal();
 			params = Cmd.advice();
 			if (params == null) {
 				Cmd.hold();
