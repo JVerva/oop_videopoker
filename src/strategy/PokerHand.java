@@ -12,8 +12,6 @@ public enum PokerHand {
 
 
 	ROYAL_FLUSH {
-		
-		
 
 		@Override
 		public
@@ -26,7 +24,6 @@ public enum PokerHand {
 
 	STRAIGHT_FLUSH {
 		
-	
 		@Override
 		public boolean matches(List<Card> hand) {
 			
@@ -36,30 +33,30 @@ public enum PokerHand {
 	
 	
 	FOUR_ACES {
+		
 		@Override
 		public
 		boolean matches(List<Card> hand) {
 
 			return Utils.isFourOfAKind("FOUR_ACES", hand);
-
-
 		}
 		
 	},
 	
 	FOUR_5_K {
+		
 		@Override
 		public
 		boolean matches(List<Card> hand) {
 
 			return Utils.isFourOfAKind("FOUR_5_K", hand);
 
-
 		}
 		
 	},
 
 	FOUR_2_4 {
+		
 		@Override
 		public
 		boolean matches(List<Card> hand) {
@@ -71,6 +68,7 @@ public enum PokerHand {
 	},
 
 		FULL_HOUSE {
+		
 			@Override
 			public
 			boolean matches(List<Card> hand) {
@@ -80,6 +78,7 @@ public enum PokerHand {
 		},
 
 		FLUSH {
+			
 			@Override
 			public
 			boolean matches(List<Card> hand) {
@@ -89,6 +88,7 @@ public enum PokerHand {
 		},
 
 		STRAIGHT {
+			
 			@Override
 			public
 			boolean matches(List<Card> hand) {
@@ -164,6 +164,7 @@ public enum PokerHand {
 
 		},
 		NONE {
+			
 			@Override
 			public boolean matches(List<Card> hand) {
 				// TODO Auto-generated method stub

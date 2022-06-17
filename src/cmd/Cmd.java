@@ -6,8 +6,7 @@ import java.util.Random;
 
 import Main.Main;
 import card.Card;
-import deck.DeckDebug;
-import deck.DeckSim;
+import deck.Deck;
 import deck.Hand;
 import gamemode.GameModeAlias;
 import strategy.PokerHand;
@@ -16,7 +15,7 @@ public class Cmd {
 	
 	private static CmdAlias[] blockedCmds =  new CmdAlias[] {CmdAlias.ADVICE, CmdAlias.HOLD, CmdAlias.DEAL};
 	
-	public static void execute(CmdAlias cmd, Integer[] params) throws IllegalArgumentException, IndexOutOfBoundsException {
+	public static void execute(CmdAlias cmd, ArrayList<Integer> params) throws IllegalArgumentException, IndexOutOfBoundsException {
 		
 		for(int i = 0; i<blockedCmds.length; i++) {
 			if (cmd == blockedCmds[i]) {
@@ -25,32 +24,18 @@ public class Cmd {
 			}
 		}
 
-		if(cmd == CmdAlias.HOLD)
-			try {
-				hold(params);
-			}catch(IndexOutOfBoundsException e){
-				throw e;
+		if(cmd == CmdAlias.HOLD) {
+			hold(params);
+		}else if(cmd == CmdAlias.BET)
+			if (params.size()==1) {
+				bet(params.get(0));
+			}else {
+				throw new IllegalArgumentException(String.valueOf(cmd.getAlias()) + "does not recieve multiple arguments");
 			}
 		else {
-			throw new IllegalArgumentException(String.valueOf(cmd.getAlias()) + "command does not recieve multiple arguments.");
+			throw new IllegalArgumentException(String.valueOf(cmd.getAlias()) + "command does not recieve arguments.");
 		}
-		
-	}
 	
-	public static void execute(CmdAlias cmd, Integer param) throws IllegalArgumentException {
-		
-		for(int i = 0; i<blockedCmds.length; i++) {
-			if (cmd == blockedCmds[i]) {
-				System.err.println(String.valueOf(cmd.getAlias()) + ": illegal command");
-			}
-		}
-		
-		if(cmd == CmdAlias.BET)
-			bet(param);
-		else {
-			throw new IllegalArgumentException(String.valueOf(cmd.getAlias()) + " command does not recieve one argument.");
-		}
-		
 	}
 	
 	public static void execute(CmdAlias cmd) throws IllegalArgumentException {
@@ -100,104 +85,86 @@ public class Cmd {
 	}
 	
 	public static void credit() {
-		System.out.println("player's credit is " +Main.credit);
+		System.out.println("player's credit is " + Main.credit);
 	}
 	
 	public static void deal() throws IndexOutOfBoundsException{
-		if(Main.gameMode == GameModeAlias.DEBUG) {
-				ArrayList<Card> cList = new ArrayList<Card>();
-				for(int i = 0; i < 5; i++) {
-					cList.add(DeckDebug.getInstance().removeCard(0));
-				}
-				Hand.getInstance().addCard(cList);
-		}else {
-			Random rn = new Random();
-			int n = DeckSim.getInstance().getCardCount() + 1;
-			Integer[] rand = new Integer[] {rn.nextInt(n), rn.nextInt(n), rn.nextInt(n), rn.nextInt(n), rn.nextInt(n)};
-			ArrayList<Card> cList = DeckSim.getInstance().removeCard(rand);
-			Hand.getInstance().addCard(cList);
+		if(Main.gameMode == GameModeAlias.SIMULATION) {
+			Deck.shuffle();
 		}
-		Hand.getInstance().print();
+		ArrayList<Card> cList = new ArrayList<Card>();
+		for(int i = 0; i < 5; i++) {
+			cList.add(Deck.removeCard(0));
+		}
+		Hand.addCard(cList);
+		System.out.print("player's hand ");
+		Hand.print();
 		System.out.println();
 		Cmd.blockedCmds = new CmdAlias[] {CmdAlias.BET, CmdAlias.DEAL};
 	}
 	
-	public static void hold(Integer[] pos) throws IllegalArgumentException{
+	public static void hold(ArrayList<Integer> pos) throws IllegalArgumentException{
 		Cmd.blockedCmds = new CmdAlias[] {CmdAlias.ADVICE, CmdAlias.HOLD, CmdAlias.DEAL};
 		
-		Integer ipos[] = new Integer[Hand.getInstance().getCardCount()-pos.length];
+		Integer ipos[] = new Integer[Hand.getCardCount()-pos.size()];
 		int j = 0;
 		int k = 0;
-		for(int i = 0; i<Hand.getInstance().getCardCount(); i++){
-			if(i!=pos[j]-1) {
+		for(int i = 0; i<Hand.getCardCount(); i++){
+			if(i!=pos.get(j)-1) {
 				ipos[k] = i;
 				k++;
 			}else {
-				if(j<pos.length-1)
+				if(j<pos.size()-1)
 					j++;
 			}
 		}
-		
-		if(Main.gameMode == GameModeAlias.DEBUG) {
 			
-			for(int i = 0; i<pos.length; i++) {
-				if(pos[i]>4) {
-					throw new IllegalArgumentException("Invalid card position:" + pos[i].toString());
-				}
-			}
-			for(int i = 0; i<ipos.length; i++) {
-					Hand.getInstance().cardList.set(ipos[i], DeckDebug.getInstance().removeCard(Integer.valueOf(0)));
-			}
-			
-		}else{
-			for(int i = 0; i<Hand.getInstance().getCardCount(); i++) {
-				if(pos[i]>4) {
-					throw new IllegalArgumentException("Invalid card position:" + pos[i].toString());
-				}
-				Random rn = new Random();
-				int n = DeckSim.getInstance().getCardCount() + 1;
-					Hand.getInstance().cardList.set(ipos[i], DeckDebug.getInstance().removeCard(Integer.valueOf(rn.nextInt(n))));
+		for(int i = 0; i<pos.size(); i++) {
+			if(pos.get(i)>4) {
+				throw new IllegalArgumentException("Invalid card position:" + pos.get(i).toString());
 			}
 		}
-		
+		for(int i = 0; i<ipos.length; i++) {
+				Hand.setCard(ipos[i], Deck.removeCard(Integer.valueOf(0)));
+		}
 		if(Main.gameMode==GameModeAlias.SIMULATION) {
 			 Cmd.blockedCmds = Arrays.copyOf(Cmd.blockedCmds,  Cmd.blockedCmds.length + 1);
 			 Cmd.blockedCmds[Cmd.blockedCmds.length - 1] = CmdAlias.BET; 
 		}
 		
-		System.out.print("Player's Hand ");
-		Hand.getInstance().print();
+		System.out.print("player's hand ");
+		Hand.print();
 		System.out.println();
-		PokerHand score = Hand.getInstance().evaluate();
-		Hand.getInstance().clear();
+		PokerHand score = Hand.evaluate();
+		Hand.clear();
 	}
 	
 	public static void hold() throws IllegalArgumentException{
 		Cmd.blockedCmds = new CmdAlias[] {CmdAlias.ADVICE, CmdAlias.HOLD, CmdAlias.DEAL};
 		
 		if(Main.gameMode == GameModeAlias.DEBUG) {
-			for(int i = 0; i<Hand.getInstance().getCardCount(); i++) {
-				Hand.getInstance().cardList.set(i, DeckDebug.getInstance().removeCard(Integer.valueOf(0)));
+			for(int i = 0; i<Hand.getCardCount(); i++) {
+				Hand.setCard(i, Deck.removeCard(Integer.valueOf(0)));
 			}
 		}else {
-			for(int i = 0; i<Hand.getInstance().getCardCount(); i++) {
+			for(int i = 0; i<Hand.getCardCount(); i++) {
 				Random rn = new Random();
-				int n = DeckSim.getInstance().getCardCount() + 1;
-				Hand.getInstance().cardList.set(i, DeckDebug.getInstance().removeCard(Integer.valueOf(rn.nextInt(n))));
+				int n = Deck.getCardCount() + 1;
+				Hand.setCard(i, Deck.removeCard(Integer.valueOf(rn.nextInt(n))));
 			}
 		}
 		if(Main.gameMode==GameModeAlias.SIMULATION) {
 			 Cmd.blockedCmds = Arrays.copyOf(Cmd.blockedCmds,  Cmd.blockedCmds.length + 1);
 			 Cmd.blockedCmds[Cmd.blockedCmds.length - 1] = CmdAlias.BET; 
 		}
-		System.out.print("Player's Hand ");
-		Hand.getInstance().print();
+		System.out.print("player's hand ");
+		Hand.print();
 		System.out.println();
-		PokerHand score = Hand.getInstance().evaluate();
-		Hand.getInstance().clear();
+		PokerHand score = Hand.evaluate();
+		Hand.clear();
 	}
 	
-	public static Integer[] advice() {
+	public static ArrayList<Integer> advice() {
 		Cmd.blockedCmds = new CmdAlias[] {CmdAlias.ADVICE, CmdAlias.BET, CmdAlias.DEAL};
 		return null;
 	}

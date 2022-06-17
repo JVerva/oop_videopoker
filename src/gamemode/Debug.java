@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 import cmd.Cmd;
 import cmd.CmdAlias;
-import deck.DeckDebug;
+import deck.Deck;
 
 public class Debug {
 	
@@ -15,34 +15,28 @@ public class Debug {
 	
 	public static void play(String cmdFileName, String deckFileName) throws FileNotFoundException, IndexOutOfBoundsException {
 		Debug.getCmds(cmdFileName);
-		DeckDebug.getInstance().build(deckFileName);
+		Deck.build(deckFileName);
 		for(int i=0; i<cmds.size(); i++) {
 			System.out.print("-cmd " + cmds.get(i).charAt(0));
 			CmdAlias cmd = CmdAlias.getCmd(cmds.get(i).charAt(0));
-			if(cmd.equals(CmdAlias.BET)){
+			if(cmd.equals(CmdAlias.BET)||cmd.equals(CmdAlias.HOLD)){
+				ArrayList<Integer> param = new ArrayList<Integer>();
 				try {
-					Integer param = Integer.parseInt(cmds.get(i+1));
-					System.out.println(" " + param.toString());
-					Cmd.execute(cmd, param);
-					i++;
-				}catch(NumberFormatException e) {
-					System.out.println();
-					Cmd.execute(cmd);
-				}
-			}else if(cmd.equals(CmdAlias.HOLD)) {
-				try {
-					Integer[] param = new Integer[]{Integer.parseInt(cmds.get(i+1)), Integer.parseInt(cmds.get(i+2))};
-					System.out.print(" ");
-					for(int j = 0; j<param.length; j++) {
-						System.out.print(param[j] + " ");
+					int j = 0;
+					while(j+i+1<cmds.size()) {
+						param.add(Integer.parseInt(cmds.get(j+i+1)));
+						System.out.print(" " + param.get(j).toString());
+						j++;
 					}
-					System.out.println();
-					Cmd.execute(cmd, param);
-					i++;
-					i++;
-				}catch(NumberFormatException e){
-					Cmd.execute(cmd);
+				}catch(NumberFormatException e) {
 				}
+					System.out.println();
+					if(param.size()>0) {
+						Cmd.execute(cmd, param);
+						i += param.size();
+					}else {
+						Cmd.execute(cmd);
+					}
 			}else {
 				System.out.println();
 				Cmd.execute(cmd);

@@ -1,72 +1,83 @@
 package deck;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Scanner;
 
 import card.Card;
 import card.Rank;
 import card.Suit;
 
 public class Deck {
-	public ArrayList<Card> cardList = new ArrayList<Card>();
-	protected Integer cardCount = 0;
 		
-	public void  build() {
-			for(int s=0;s<4;s++) {
-				for(int r=0;r<13;r++) {
-					this.addCard(new Card(Rank.get(r),Suit.get(s)));
+	private static ArrayList<Card> cardList = new ArrayList<Card>();
+		
+	public static void build() {
+		for(int s=0;s<4;s++) {
+			for(int r=0;r<13;r++) {
+				addCard(new Card(Rank.get(r),Suit.get(s)));
+			}
+		}
+	}
+	
+	public static void build(String fileName) throws FileNotFoundException {
+		try (Scanner sc = new Scanner(new File(fileName))){
+			while(sc.hasNext()) {
+				String line = sc.next();
+				String[] tokens = line.split(" ");
+				for(int i = 0; i < tokens.length; i++) {
+					addCard(Card.stringToCard(tokens[i]));
 				}
 			}
 		}
+	}
 	
-	public void addCard(Card card) {
+	public static void addCard(Card card) {
 		cardList.add(card);
-		cardCount++;
 	}
 	
-	public void addCard(ArrayList<Card> cards) {
+	public static  void addCard(ArrayList<Card> cards) {
 		cardList.addAll(cards);
-		cardCount = cardCount + cards.size();
 	}
 	
-	public Card removeCard(Integer pos) throws IndexOutOfBoundsException {
+	public static Card removeCard(Integer pos) throws IndexOutOfBoundsException {
 		try {
 			Card card = cardList.get(pos.intValue());
 			cardList.remove(pos.intValue());
-			cardCount--;
 			return card;
 		}catch(IndexOutOfBoundsException e) {
 			throw new IndexOutOfBoundsException("Deck ran out of cards.");
 		}
 	}
 	
-	public ArrayList<Card> removeCard(Integer[] pos) {
+	public static ArrayList<Card> removeCard(Integer[] pos) {
 		try {
 			ArrayList<Card> card = new ArrayList<Card>();
 			for(int i = 0; i<pos.length; i++) {	
 				card.add(cardList.get(pos[i].intValue()));
 				cardList.remove(pos[i].intValue());
 			}
-			cardCount -= pos.length;
 			return card;
 		}catch(IndexOutOfBoundsException e) {
 				throw new IndexOutOfBoundsException("Deck ran out of cards.");
 		}
 	}
 
-	public void shuffle() {
+	public static void shuffle() {
 		Collections.shuffle(cardList);
 	}
 	
 	/**
 	 * @return the cardCount
 	 */
-	public int getCardCount() {
-		return this.cardCount;
+	public static int getCardCount() {
+		return cardList.size();
 	}
 	
-	public void clear() {
+	public static void clear() {
 		cardList.clear();
-		cardCount = 0;
 	}
+	
 }
