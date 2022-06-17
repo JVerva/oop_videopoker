@@ -127,6 +127,28 @@ public static boolean isTwoPair(List<Card> hand){
 	return pairCounter == 2 && rankMap.containsValue(1);
 }
 
+
+public static boolean isJacksOrBetter(List<Card> hand){
+	HashMap<Integer,Integer> rankMap = new HashMap<>();
+	int pairCounter = 0;
+
+	for(Card card : hand){
+		if(!rankMap.containsKey(card.getRank().getValue())){
+			rankMap.put(card.getRank().getValue(), 1);
+		}
+		else{
+			int value = rankMap.get(card.getRank().getValue());
+			rankMap.put(card.getRank().getValue(), value+1);
+			if(card.getRank().getValue()>10)
+				pairCounter++;
+		}
+	}
+
+	return pairCounter == 1 && rankMap.containsValue(1);
+}
+
+
+
 public static List<Integer> fourToRoyalFlush(List<Card> hand){
 	
 	List<Integer> list = Arrays.asList(1,10,11,12,13);

@@ -28,7 +28,7 @@ public enum Suit {
 	}
 	
 	public static Suit get(int i) throws IllegalArgumentException{
-		switch(1) {
+		switch(i) {
 		case 0:
 			return Suit.DIAMONDS;
 		case 1:
