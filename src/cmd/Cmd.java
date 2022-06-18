@@ -2,6 +2,7 @@ package cmd;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import Main.Main;
@@ -9,6 +10,7 @@ import card.Card;
 import deck.Deck;
 import deck.Hand;
 import gamemode.GameModeAlias;
+import strategy.DificultHand;
 import strategy.PokerHand;
 
 public class Cmd {
@@ -106,8 +108,9 @@ public class Cmd {
 		Cmd.blockedCmds = new CmdAlias[] {CmdAlias.BET, CmdAlias.DEAL};
 	}
 	
-	public static void hold(ArrayList<Integer> pos) throws IllegalArgumentException{
+	public static void hold(List<Integer> pos) throws IllegalArgumentException{
 		Cmd.blockedCmds = new CmdAlias[] {CmdAlias.ADVICE, CmdAlias.HOLD, CmdAlias.DEAL};
+		
 		
 		Integer ipos[] = new Integer[Hand.getCardCount()-pos.size()];
 		int j = 0;
@@ -132,7 +135,9 @@ public class Cmd {
 		}
 		if(Main.gameMode==GameModeAlias.SIMULATION) {
 			 Cmd.blockedCmds = Arrays.copyOf(Cmd.blockedCmds,  Cmd.blockedCmds.length + 1);
-			 Cmd.blockedCmds[Cmd.blockedCmds.length - 1] = CmdAlias.BET; 
+			 Cmd.blockedCmds[Cmd.blockedCmds.length - 1] = CmdAlias.BET;
+			 Deck.clear();
+			 Deck.build();
 		}
 		
 		System.out.print("player's hand ");
@@ -154,15 +159,14 @@ public class Cmd {
 			}
 		}else {
 			for(int i = 0; i<Hand.getCardCount(); i++) {
-				Random rn = new Random();
-				int n = Deck.getCardCount() + 1;
-				Hand.setCard(i, Deck.removeCard(Integer.valueOf(rn.nextInt(n))));
+				Hand.setCard(i, Deck.removeCard(Integer.valueOf(0)));
 			}
-		}
-		if(Main.gameMode==GameModeAlias.SIMULATION) {
 			 Cmd.blockedCmds = Arrays.copyOf(Cmd.blockedCmds,  Cmd.blockedCmds.length + 1);
-			 Cmd.blockedCmds[Cmd.blockedCmds.length - 1] = CmdAlias.BET; 
+			 Cmd.blockedCmds[Cmd.blockedCmds.length - 1] = CmdAlias.BET;
+			 Deck.clear();
+			 Deck.build();
 		}
+		
 		System.out.print("player's hand ");
 		Hand.print();
 		System.out.println();
@@ -173,9 +177,16 @@ public class Cmd {
 		Hand.clear();
 	}
 	
-	public static ArrayList<Integer> advice() {
+	public static List<Integer> advice() {
 		Cmd.blockedCmds = new CmdAlias[] {CmdAlias.ADVICE, CmdAlias.BET, CmdAlias.DEAL};
-		return null;
+		List<Integer> positionList = null;
+		 for(DificultHand choice : DificultHand.values()) {
+		      positionList=choice.matches(Hand.getCardList());
+		      if(positionList!=null)
+		    	  break;
+		    }
+	
+		return positionList;
 	}
 	
 	public static void statistics() {

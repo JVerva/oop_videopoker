@@ -79,4 +79,8 @@ public class Hand {
 	public static void setCard(int pos, Card newCard) {
 		Hand.cardList.set(pos, newCard);
 	}
+	
+	public static ArrayList<Card> getCardList() {
+		return cardList;
+	}
 }
