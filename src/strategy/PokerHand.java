@@ -67,8 +67,31 @@ public enum PokerHand {
 		
 	},
 	
+	FULL_HOUSE {
+		
+		@Override
+		public
+		boolean matches(List<Card> hand) {
+
+		 return Utils.isFullHouse(hand);
+		}
+	},
+
 	
-	STRAIGHT {
+	
+	
+	
+	FLUSH {
+		
+		@Override
+		public
+		boolean matches(List<Card> hand) {
+
+			return Utils.isFlush("FLUSH", hand);
+		}
+	},
+	
+STRAIGHT {
 		
 		@Override
 		public
@@ -103,28 +126,7 @@ public enum PokerHand {
 	    	return true;
 		}
 	},
-	
-	FLUSH {
-		
-		@Override
-		public
-		boolean matches(List<Card> hand) {
 
-			return Utils.isFlush("FLUSH", hand);
-		}
-	},
-	
-	
-
-		FULL_HOUSE {
-		
-			@Override
-			public
-			boolean matches(List<Card> hand) {
-
-			 return Utils.isFullHouse(hand);
-			}
-		},
 
 
 		THREE_OF_A_KIND {

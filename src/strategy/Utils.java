@@ -261,179 +261,18 @@ public static List<Integer> fourToRoyalFlush(List<Card> hand){
 	}
 	}
 	
-	if(positionList.size()<4) {	
-		return null;
+	if(positionList.size()==4) {	
+		return positionList;
 	}
 	
-	return positionList;
+	return null;
 	
 	
 }
 
 
-public static boolean isFourToRoyalFlush(List<Card> hand){
-	
-	List<Integer> list = Arrays.asList(1,10,11,12,13);
-	
-	int suit = 0;
-	
-	int position=0;
-	
-	
-	for(Card card : hand){
-			
-		if(list.contains(card.getRank().getValue())) {
-			if(suit==0) {
-				suit=card.getSuit().getValue();
-			} else if(card.getSuit().getValue()==suit) {
-				position++;
-			}
-		
-	}
-	}
-	
-	if(position==4) {
-		return true;
-	}
-	
-	return false;
-	
-	
-}
 
 
-public static boolean isThreeAces(List<Card> hand) {
-	// TODO Auto-generated method stub
-	return false;
-}
-
-
-public static boolean isFourToAStraigthFlush(List<Card> hand) {
-	// TODO Auto-generated method stub
-	return false;
-}
-
-
-public static boolean isHighPair(List<Card> hand) {
-	// TODO Auto-generated method stub
-	return false;
-}
-
-
-public static boolean isFourToAFlush(List<Card> hand) {
-	// TODO Auto-generated method stub
-	return false;
-}
-
-
-public static boolean isThreeToARoyalFlush(List<Card> hand) {
-	// TODO Auto-generated method stub
-	return false;
-}
-
-
-public static boolean isFourToAnOutsideStraigth(List<Card> hand) {
-	// TODO Auto-generated method stub
-	return false;
-}
-
-
-public static boolean isLowPair(List<Card> hand) {
-	// TODO Auto-generated method stub
-	return false;
-}
-
-
-public static boolean isAKQJUnsuited(List<Card> hand) {
-	// TODO Auto-generated method stub
-	return false;
-}
-
-
-public static boolean isThreeToAStraightFlush(int type,List<Card> hand) {
-	// TODO Auto-generated method stub
-	return false;
-}
-
-
-
-
-public static boolean isFourToAnInsideStraight(int type,List<Card> hand) {
-	// TODO Auto-generated method stub
-	return false;
-}
-
-
-public static boolean isQJSuited(List<Card> hand) {
-	// TODO Auto-generated method stub
-	return false;
-}
-
-
-public static boolean isThreeToAFlush(int type,List<Card> hand) {
-	// TODO Auto-generated method stub
-	return false;
-}
-
-
-public static boolean isTwoSuitedHighCards(List<Card> hand) {
-	// TODO Auto-generated method stub
-	return false;
-}
-
-
-public static boolean isKQJUnsuited(List<Card> hand) {
-	// TODO Auto-generated method stub
-	return false;
-}
-
-
-public static boolean isJTSuited(List<Card> hand) {
-	// TODO Auto-generated method stub
-	return false;
-}
-
-
-public static boolean isQJUnsuited(List<Card> hand) {
-	// TODO Auto-generated method stub
-	return false;
-}
-
-
-public static boolean isQTSuited(List<Card> hand) {
-	// TODO Auto-generated method stub
-	return false;
-}
-
-
-public static boolean isKQOrKJUnsuited(List<Card> hand) {
-	// TODO Auto-generated method stub
-	return false;
-}
-
-
-public static boolean isAce(List<Card> hand) {
-	// TODO Auto-generated method stub
-	return false;
-}
-
-
-public static boolean isKTSuited(List<Card> hand) {
-	// TODO Auto-generated method stub
-	return false;
-}
-
-
-public static boolean isJQK(List<Card> hand) {
-	// TODO Auto-generated method stub
-	return false;
-}
-
-
-public static boolean isDiscardEverything(List<Card> hand) {
-	// TODO Auto-generated method stub
-	return false;
-}
 
 
 public static List<Integer> discardEverything(List<Card> hand) {
