@@ -150,7 +150,14 @@ public static boolean isFlush(String type, List<Card> hand) {
 		list = Arrays.asList(1,10,11,12,13);
 		 break;
 	case "STRAIGHT_FLUSH":
-		 list = Arrays.asList(9,10,11,12,13);
+		if(isStraight(hand)) {
+			for(Card card : hand){
+				if(card.getSuit().getValue() != suit)
+					return false;
+			}
+			return true;
+		}
+		 
 		 break;
 	case "FLUSH":
 		for(Card card : hand){
