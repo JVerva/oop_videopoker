@@ -123,7 +123,7 @@ public class Cmd {
 		}
 			
 		for(int i = 0; i<pos.size(); i++) {
-			if(pos.get(i)>4) {
+			if(pos.get(i)>5) {
 				throw new IllegalArgumentException("Invalid card position:" + pos.get(i).toString());
 			}
 		}
