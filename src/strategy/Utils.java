@@ -289,6 +289,12 @@ public class Utils {
 					positionList.add(getPos(hand, sortedHand.get(i))+1);
 				}
 				positionList.add(getPos(hand, sortedHand.get(i+1))+1);
+			}else if(sortedHand.get(i).getRank().getInt()+2 == sortedHand.get(i+1).getRank().getInt() && sortedHand.get(i).getSuit() == sortedHand.get(i+1).getSuit()) {
+				holes ++;
+				if (holes>1)
+					return null;
+				count++;
+				positionList.add(getPos(hand, sortedHand.get(i+1))+1);
 			}else {
 				if (s == true && count != 4)
 					return null;
@@ -543,7 +549,7 @@ public class Utils {
 		sortedHand.sort(comparator);
 		
 		for(int i = 0; i<sortedHand.size()-1; i++){
-			if(sortedHand.get(i).getRank().getInt()+1 == sortedHand.get(i+1).getRank().getInt()) {
+			if(sortedHand.get(i).getRank()!= Rank.ACE && sortedHand.get(i+1).getRank() != Rank.ACE && (sortedHand.get(i).getRank().getInt()+1 == sortedHand.get(i+1).getRank().getInt())) {
 				s = true;
 				count++;
 				if(count == 1) {
@@ -555,11 +561,11 @@ public class Utils {
 					return null;
 			}
 		}
-		
+		if(count == 4) {
+			return positionList;
+		}
 		return null;
-		
 	}
-	
 	
 	
 	private static List<Integer> getUnsuited(List<Integer> cardList, List<Card> hand) {
