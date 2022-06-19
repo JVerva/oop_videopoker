@@ -461,8 +461,7 @@ public enum DificultHand {
 			@Override
 			public List<Integer> matches(List<Card> hand) {
 				// TODO Auto-generated method stub
-				List<Integer> list = null;
-				return list;
+				return null;
 			}
 		};
 

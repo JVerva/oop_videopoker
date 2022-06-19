@@ -110,15 +110,16 @@ public class Cmd {
 	
 	public static void hold(List<Integer> pos) throws IllegalArgumentException{
 		Cmd.blockedCmds = new CmdAlias[] {CmdAlias.ADVICE, CmdAlias.HOLD, CmdAlias.DEAL};
-		
-		
+
 		Integer ipos[] = new Integer[Hand.getCardCount()-pos.size()];
 		int j = 0;
 		int k = 0;
 		for(int i = 0; i<Hand.getCardCount(); i++){
 			if(i!=pos.get(j)-1) {
-				ipos[k] = i;
-				k++;
+				if(k<ipos.length) {
+					ipos[k] = i;
+				}
+					k++;
 			}else {
 				if(j<pos.size()-1)
 					j++;

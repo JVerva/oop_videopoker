@@ -357,7 +357,7 @@ public class Utils {
 		Integer[] seen = new Integer[] {0,0,0,0,0,0,0,0,0,0,0,0,0};
 		for( int i = 0; i<hand.size(); i++ ) {
 			if(hand.get(i).getRank()!=Rank.ACE)
-				seen[hand.get(i).getRank().getInt()]++;
+				seen[hand.get(i).getRank().getInt()-2]++;
 		}
 		for(int i = 0; i<seen.length; i++) {
 			if(seen[i] == 2) {
