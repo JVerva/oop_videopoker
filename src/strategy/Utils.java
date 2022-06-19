@@ -214,7 +214,6 @@ public static boolean isTwoPair(List<Card> hand){
 	return pairCounter == 2 && rankMap.containsValue(1);
 }
 
-
 public static boolean isJacksOrBetter(List<Card> hand){
 	HashMap<Integer,Integer> rankMap = new HashMap<>();
 	int pairCounter = 0;
@@ -233,7 +232,6 @@ public static boolean isJacksOrBetter(List<Card> hand){
 
 	return pairCounter == 1 && rankMap.containsValue(1);
 }
-
 
 
 public static List<Integer> fourToRoyalFlush(List<Card> hand){
@@ -255,10 +253,10 @@ public static List<Integer> fourToRoyalFlush(List<Card> hand){
 				positionList.add(position);
 			} else if(card.getSuit().getValue()==suit) {
 				positionList.add(position);
+			}
 				position++;
 			}
 		
-	}
 	}
 	
 	if(positionList.size()==4) {	
@@ -266,14 +264,7 @@ public static List<Integer> fourToRoyalFlush(List<Card> hand){
 	}
 	
 	return null;
-	
-	
 }
-
-
-
-
-
 
 public static List<Integer> discardEverything(List<Card> hand) {
 	// TODO Auto-generated method stub
@@ -441,10 +432,6 @@ public static List<Integer> fourOfAKind(String string, List<Card> hand) {
 	// TODO Auto-generated method stub
 	return null;
 }
-
-
-
-
 
 //public boolean isFourToRoyalFlush(List<Card> hand){
 //	
