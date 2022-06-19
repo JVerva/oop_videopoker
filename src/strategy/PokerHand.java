@@ -37,18 +37,6 @@ public enum PokerHand {
 		
 	},
 	
-	FOUR_5_K {
-		
-		@Override
-		public
-		boolean matches(List<Card> hand) {
-
-			return Utils.isFourOfAKind("FOUR_5_K", hand);
-
-		}
-		
-	},
-
 	FOUR_2_4 {
 		
 		@Override
@@ -56,6 +44,18 @@ public enum PokerHand {
 		boolean matches(List<Card> hand) {
 
 			return Utils.isFourOfAKind("FOUR_2_4", hand);
+
+		}
+		
+	},
+	
+	FOUR_5_K {
+		
+		@Override
+		public
+		boolean matches(List<Card> hand) {
+
+			return Utils.isFourOfAKind("FOUR_5_K", hand);
 
 		}
 		
@@ -84,7 +84,7 @@ public enum PokerHand {
 	STRAIGHT {
 		@Override
 		public boolean matches(List<Card> hand) {
-			return Utils.isFullHouse(hand);
+			return Utils.isStraight(hand);
 		}
 	},
 

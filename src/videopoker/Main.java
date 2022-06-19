@@ -1,4 +1,4 @@
-package Main;
+package videopoker;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -11,7 +11,10 @@ public class Main {
 	public static GameModeAlias gameMode;
 	public static Integer credit;
 	public static Integer baseCredit;
+	public static Integer sumofbets=0;
 	public static Integer[] multiplier = new Integer[] {250, 50, 160, 80, 50, 10, 7, 5, 3, 1, 1, 0};
+	public static Boolean doPrint = true;
+	public static Integer sumofgain=0;
 	
 	public static void main(String[] args) {
 		try {

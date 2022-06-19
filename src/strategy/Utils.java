@@ -96,41 +96,13 @@ public class Utils {
 
 	public static List<Integer> straight(List<Card> hand) {
 		
-	
-	//	int firstCardSuit = playerHand.get(0).getSuit();
-		List<Integer> sortedCardRanks = new ArrayList<>();
-		List<Integer> cardSuits = new ArrayList<>();
-		List<Integer> positionList = new ArrayList<>();
-		int count = 0;
-	
-		//Create an Integer list containing all the player's ranks
-		for(Card card : hand){
-			sortedCardRanks.add(card.getRank().getValue());
-			cardSuits.add(card.getSuit().getValue());
-		}
-	
-		//Sort the ranks
-		Collections.sort(sortedCardRanks);
-	
-		//Check to see that all card suits are not identical
-		Set<Integer> suitSet = new HashSet<>(cardSuits);
-	
-		//If set size is smaller, there are duplicates, meaning more than one suit, which a Straight requires
-		if(suitSet.size() > cardSuits.size())
-			return null;
-	
-		//Go Step by step to see if the next card's rank is only 1 more than it
-		for(int i = 0; i < 4; i++){
-			
-			if(!(sortedCardRanks.get(i) == (sortedCardRanks.get(i+1) - 1)))
-				count++;
-		}
-		
-		if(count==5) {
-			for(int i=0;i<5;i++) {
-				positionList.add(i);
+		if(isStraight(hand)) {
+			List<Integer> positionList = new ArrayList<>();
+			for (int i = 0; i<hand.size(); i++) {
+				positionList.add(i+1);
 			}
-		}
+			return positionList;
+		}else
 			return null;
 		
 	}
@@ -224,7 +196,6 @@ public class Utils {
 	}
 
 	
-	
 	public static List<Integer> straightFlush(List<Card> hand){
 		if(Utils.isFlush("FLUSH", hand)) {
 			List<Integer> positionList = new ArrayList<>();
@@ -236,7 +207,22 @@ public class Utils {
 			return null;
 	}
 
-	public static List<Integer> fourOfAKind(String type,List<Card> hand){
+	public static List<Integer> fourOfAKind(String type, List<Card> hand){
+		if(isFourOfAKind(type, hand)) {
+			int f = 0;
+			List<Integer> positionList = new ArrayList<>();
+			for(int i = 0; i<hand.size()-1; i++) {
+				if(hand.get(i).getRank() == hand.get(i+1).getRank())
+					f = hand.get(i).getRank().getInt();
+			}
+			for(int i = 0; i<hand.size(); i++) {
+				if(hand.get(i).getRank().getInt()==f) {
+					positionList.add(i+1);
+				}
+			}
+			return positionList;
+		}
+		
 		return null;
 	}
 	
@@ -318,6 +304,7 @@ public class Utils {
 		List<Card> sortedHand = hand;
 		List<Integer> positionList = new ArrayList<>();
 		sortedHand.sort(comparator);
+		
 		Boolean s = false;
 		int count=0;
 		int holes = 0;
@@ -328,6 +315,7 @@ public class Utils {
 				count++;
 				if(count == 1) {
 					positionList.add(getPos(hand, sortedHand.get(i))+1);
+					count++;
 				}
 				positionList.add(getPos(hand, sortedHand.get(i+1))+1);
 			}else if(sortedHand.get(i).getRank().getInt()+2 == sortedHand.get(i+1).getRank().getInt() && sortedHand.get(i).getSuit() == sortedHand.get(i+1).getSuit()) {
@@ -506,6 +494,300 @@ public class Utils {
 		return Utils.getUnsuited(list, hand);
 	}
 	
+	public static List<Integer> threeToStraightFlushType1(List<Card> hand){
+		
+		List<Card> sortedHand = hand;
+		List<Integer> positionList = new ArrayList<>();
+		sortedHand.sort(comparator);
+		Boolean s = false;
+		int count=0;
+		int holes = 0;
+		int HighCard = 0;
+		
+		
+	
+		for(int i = 0; i<sortedHand.size()-1; i++){
+			if(sortedHand.get(i).getRank().getInt()+1 == sortedHand.get(i+1).getRank().getInt() && sortedHand.get(i).getSuit() == sortedHand.get(i+1).getSuit()) {
+				s = true;
+				count++;
+				if(count == 1) {
+					positionList.add(getPos(hand, sortedHand.get(i))+1);
+					count++;
+				}
+				positionList.add(getPos(hand, sortedHand.get(i+1))+1);
+			}else if(sortedHand.get(i).getRank().getInt()+2 == sortedHand.get(i+1).getRank().getInt() && sortedHand.get(i).getSuit() == sortedHand.get(i+1).getSuit()) {
+				holes ++;
+				if (holes>2)
+					return null;
+				count++;
+				positionList.add(getPos(hand, sortedHand.get(i+1))+1);
+			}else if(sortedHand.get(i).getRank().getInt()+3 == sortedHand.get(i+1).getRank().getInt() && sortedHand.get(i).getSuit() == sortedHand.get(i+1).getSuit()) {
+				holes ++;
+				holes ++;
+				if (holes>2)
+					return null;
+				count++;
+				positionList.add(getPos(hand, sortedHand.get(i+1))+1);
+			}else {
+				if (s == true && count != 3)
+					return null;
+			}
+		}
+		//check type 1
+		for(int i = 0; i<positionList.size(); i++) {
+			if(hand.get(positionList.get(i)-1).getRank().getInt() > 10) {
+				HighCard++;
+			}
+			if(hand.get(positionList.get(i)-1).getRank().getInt() == 1) {
+				return null;
+			}
+		}
+		if(positionList.size()>2) {
+			if(hand.get(positionList.get(0)-1).getRank().getInt() == 2 && hand.get(positionList.get(1)-1).getRank().getInt() == 3 && hand.get(positionList.get(2)-1).getRank().getInt() == 4 ) {
+				return null;
+			}
+		}
+		
+		if(count == 3 && HighCard == 2) {
+			return positionList;
+		}else {
+			return null;
+		}
+		
+	}
+	
+	public static List<Integer> threeToStraightFlushType2(List<Card> hand){
+		
+		List<Card> sortedHand = hand;
+		List<Integer> positionList = new ArrayList<>();
+		sortedHand.sort(comparator);
+		Boolean s = false;
+		int count=0;
+		int holes = 0;
+		int HighCard = 0;
+		int sequence = 0;
+		
+		
+	
+		for(int i = 0; i<sortedHand.size()-1; i++){
+			if(sortedHand.get(i).getRank().getInt()+1 == sortedHand.get(i+1).getRank().getInt() && sortedHand.get(i).getSuit() == sortedHand.get(i+1).getSuit()) {
+				s = true;
+				count++;
+				if(count == 1) {
+					positionList.add(getPos(hand, sortedHand.get(i))+1);
+					count++;
+				}
+				positionList.add(getPos(hand, sortedHand.get(i+1))+1);
+			}else if(sortedHand.get(i).getRank().getInt()+2 == sortedHand.get(i+1).getRank().getInt() && sortedHand.get(i).getSuit() == sortedHand.get(i+1).getSuit()) {
+				holes ++;
+				if (holes>2)
+					return null;
+				count++;
+				positionList.add(getPos(hand, sortedHand.get(i+1))+1);
+			}else if(sortedHand.get(i).getRank().getInt()+3 == sortedHand.get(i+1).getRank().getInt() && sortedHand.get(i).getSuit() == sortedHand.get(i+1).getSuit()) {
+				holes ++;
+				holes ++;
+				if (holes>2)
+					return null;
+				count++;
+				positionList.add(getPos(hand, sortedHand.get(i+1))+1);
+			}else {
+				if (s == true && count != 3)
+					return null;
+			}
+		}
+		//check type 2
+		for(int i = 0; i<positionList.size(); i++) {
+			if(hand.get(positionList.get(i)-1).getRank().getInt() > 10) {
+				HighCard++;
+			}
+			if(hand.get(positionList.get(i)-1).getRank().getInt() == 1) {
+				HighCard++;
+			}
+		}
+		if(positionList.size()>2) {
+			if(hand.get(positionList.get(0)-1).getRank().getInt() == 2 && hand.get(positionList.get(1)-1).getRank().getInt() == 3 && hand.get(positionList.get(2)-1).getRank().getInt() == 4 ) {
+				sequence = 1;
+			}
+		}
+		if(count == 3 && (HighCard == 1 || sequence == 1)) {
+			return positionList;
+		}else {
+			return null;
+		}
+		
+	}
+	
+	public static List<Integer> threeToStraightFlushType3(List<Card> hand){
+		
+		List<Card> sortedHand = hand;
+		List<Integer> positionList = new ArrayList<>();
+		sortedHand.sort(comparator);
+		Boolean s = false;
+		int count=0;
+		int holes = 0;
+		int HighCard = 0;		
+		
+	
+		for(int i = 0; i<sortedHand.size()-1; i++){
+			if(sortedHand.get(i).getRank().getInt()+1 == sortedHand.get(i+1).getRank().getInt() && sortedHand.get(i).getSuit() == sortedHand.get(i+1).getSuit()) {
+				s = true;
+				count++;
+				if(count == 1) {
+					positionList.add(getPos(hand, sortedHand.get(i))+1);
+					count++;
+				}
+				positionList.add(getPos(hand, sortedHand.get(i+1))+1);
+			}else if(sortedHand.get(i).getRank().getInt()+2 == sortedHand.get(i+1).getRank().getInt() && sortedHand.get(i).getSuit() == sortedHand.get(i+1).getSuit()) {
+				holes ++;
+				if (holes>2)
+					return null;
+				count++;
+				positionList.add(getPos(hand, sortedHand.get(i+1))+1);
+			}else if(sortedHand.get(i).getRank().getInt()+3 == sortedHand.get(i+1).getRank().getInt() && sortedHand.get(i).getSuit() == sortedHand.get(i+1).getSuit()) {
+				holes ++;
+				holes ++;
+				if (holes>2)
+					return null;
+				count++;
+				positionList.add(getPos(hand, sortedHand.get(i+1))+1);
+			}else {
+				if (s == true && count != 3)
+					return null;
+			}
+		}
+		//check type 3
+		for(int i = 0; i<positionList.size(); i++) {
+			if(hand.get(positionList.get(i)-1).getRank().getInt() > 10) {
+				HighCard++;
+			}
+			if(hand.get(positionList.get(i)-1).getRank().getInt() == 1) {
+				HighCard++;
+			}
+		}
+		
+		if(count == 3 && HighCard == 0) {
+			return positionList;
+		}else {
+			return null;
+		}
+		
+	}
+	
+	public static List<Integer> threeToAFlushWith2HighCards(List<Card> hand){
+		
+		int s;
+		int highCard = 0;
+		Integer[] seen = new Integer[] {0,0,0,0};
+		for( int i = 0; i<hand.size(); i++ ) {
+			seen[hand.get(i).getSuit().getValue()-1]++;
+		}
+		for(int i = 0; i<seen.length; i++) {
+			if(seen[i] == 3) {
+				s = i+1;
+				List<Integer> positionList = new ArrayList<>();
+				for(int j = 0; j<hand.size(); j++) {
+					if(hand.get(j).getSuit().getValue()==s) {
+						positionList.add(j+1);
+					}
+					if(hand.get(j).getSuit().getValue()==s && (hand.get(j).getRank().getInt()== 1 || hand.get(j).getRank().getInt() > 10) ) {
+						highCard ++;
+					}
+				}
+				if(highCard == 2) {
+					return positionList;
+				}
+				
+			}
+		}
+		return null;
+	}
+	
+	public static List<Integer> threeToAFlushWith1HighCard(List<Card> hand){
+		
+		int s;
+		int highCard = 0;
+		Integer[] seen = new Integer[] {0,0,0,0};
+		for( int i = 0; i<hand.size(); i++ ) {
+			seen[hand.get(i).getSuit().getValue()-1]++;
+		}
+		for(int i = 0; i<seen.length; i++) {
+			if(seen[i] == 3) {
+				s = i+1;
+				List<Integer> positionList = new ArrayList<>();
+				for(int j = 0; j<hand.size(); j++) {
+					if(hand.get(j).getSuit().getValue()==s) {
+						positionList.add(j+1);
+					}
+					if(hand.get(j).getSuit().getValue()==s && (hand.get(j).getRank().getInt()== 1 || hand.get(j).getRank().getInt() > 10) ) {
+						highCard ++;
+					}
+				}
+				if(highCard == 1) {
+					return positionList;
+				}
+				
+			}
+		}
+		return null;
+	}
+	
+	public static List<Integer> threeToAFlushWith0HighCard(List<Card> hand){
+		
+		int s;
+		int highCard = 0;
+		Integer[] seen = new Integer[] {0,0,0,0};
+		for( int i = 0; i<hand.size(); i++ ) {
+			seen[hand.get(i).getSuit().getValue()-1]++;
+		}
+		for(int i = 0; i<seen.length; i++) {
+			if(seen[i] == 3) {
+				s = i+1;
+				List<Integer> positionList = new ArrayList<>();
+				for(int j = 0; j<hand.size(); j++) {
+					if(hand.get(j).getSuit().getValue()==s) {
+						positionList.add(j+1);
+					}
+					if(hand.get(j).getSuit().getValue()==s && (hand.get(j).getRank().getInt()== 1 || hand.get(j).getRank().getInt() > 10) ) {
+						highCard ++;
+					}
+				}
+				if(highCard == 0) {
+					return positionList;
+				}
+				
+			}
+		}
+		return null;
+	}
+	
+	public static List<Integer> twoSuitedHighCards(List<Card> hand){
+		
+		int s;
+		int highCard = 0;
+		Integer[] seen = new Integer[] {0,0,0,0};
+		for( int i = 0; i<hand.size(); i++ ) {
+			seen[hand.get(i).getSuit().getValue()-1]++;
+		}
+		for(int i = 0; i<seen.length; i++) {
+			if(seen[i] == 2) {
+				s = i+1;
+				List<Integer> positionList = new ArrayList<>();
+				for(int j = 0; j<hand.size(); j++) {
+					if(hand.get(j).getSuit().getValue()==s && (hand.get(j).getRank().getInt()== 1 || hand.get(j).getRank().getInt() > 10) ) {
+						positionList.add(j+1);
+						highCard ++;
+					}
+				}
+				if(highCard == 2) {
+					return positionList;
+				}
+				
+			}
+		}
+		return null;
+	}
+	
 	public static List<Integer> KQJUnsuited(List<Card> hand){
 		
 		List<Integer> list = new ArrayList<>();
@@ -595,6 +877,7 @@ public class Utils {
 				count++;
 				if(count == 1) {
 					positionList.add(getPos(hand, sortedHand.get(i))+1);
+					count++;
 				}
 				positionList.add(getPos(hand, sortedHand.get(i+1))+1);
 			}else {
@@ -608,6 +891,178 @@ public class Utils {
 		return null;
 	}
 	
+	public static List<Integer> fourToInsideStraightWith3HighCards(List<Card> hand){
+			
+		List<Card> sortedHand = hand;
+		List<Integer> positionList = new ArrayList<>();
+		sortedHand.sort(comparator);
+		Boolean s = false;
+		int count=0;
+		int holes = 0;
+		int highCard = 0;
+	
+		for(int i = 0; i<sortedHand.size()-1; i++){
+			if(sortedHand.get(i).getRank().getInt()+1 == sortedHand.get(i+1).getRank().getInt()) {
+				s = true;
+				count++;
+				if(count == 1) {
+					positionList.add(getPos(hand, sortedHand.get(i))+1);
+					count++;
+				}
+				positionList.add(getPos(hand, sortedHand.get(i+1))+1);
+			}else if(sortedHand.get(i).getRank().getInt()+2 == sortedHand.get(i+1).getRank().getInt()) {
+				holes ++;
+				if (holes>1)
+					return null;
+				count++;
+				positionList.add(getPos(hand, sortedHand.get(i+1))+1);
+			}else {
+				if (s == true && count != 4)
+					return null;
+			}
+		}
+		//Check 3 HighCards
+		for(int i = 0; i<positionList.size(); i++) {
+			if(hand.get(positionList.get(i)-1).getRank().getInt() > 10 || hand.get(positionList.get(i)-1).getRank().getInt() == 1) {
+				highCard++;
+			}
+		}
+		
+		if(count == 4 && holes ==1 && highCard == 3) {
+			return positionList;
+		}else {
+			return null;
+		}
+		
+	}
+	
+	public static List<Integer> fourToInsideStraightWith2HighCards(List<Card> hand){
+		
+		List<Card> sortedHand = hand;
+		List<Integer> positionList = new ArrayList<>();
+		sortedHand.sort(comparator);
+		Boolean s = false;
+		int count=0;
+		int holes = 0;
+		int highCard = 0;
+	
+		for(int i = 0; i<sortedHand.size()-1; i++){
+			if(sortedHand.get(i).getRank().getInt()+1 == sortedHand.get(i+1).getRank().getInt()) {
+				s = true;
+				count++;
+				if(count == 1) {
+					positionList.add(getPos(hand, sortedHand.get(i))+1);
+					count++;
+				}
+				positionList.add(getPos(hand, sortedHand.get(i+1))+1);
+			}else if(sortedHand.get(i).getRank().getInt()+2 == sortedHand.get(i+1).getRank().getInt()) {
+				holes ++;
+				if (holes>1)
+					return null;
+				count++;
+				positionList.add(getPos(hand, sortedHand.get(i+1))+1);
+			}else {
+				if (s == true && count != 4)
+					return null;
+			}
+		}
+		//Check 2 HighCards
+		for(int i = 0; i<positionList.size(); i++) {
+			if(hand.get(positionList.get(i)-1).getRank().getInt() > 10 || hand.get(positionList.get(i)-1).getRank().getInt() == 1) {
+				highCard++;
+			}
+		}
+		
+		if(count == 4 && holes == 1 && highCard == 2) {
+			return positionList;
+		}else {
+			return null;
+		}
+		
+	}
+	
+	public static List<Integer> fourToInsideStraightWith1HighCard(List<Card> hand){
+		
+		List<Card> sortedHand = hand;
+		List<Integer> positionList = new ArrayList<>();
+		sortedHand.sort(comparator);
+		Boolean s = false;
+		int count=0;
+		int holes = 0;
+		int highCard = 0;
+	
+		for(int i = 0; i<sortedHand.size()-1; i++){
+			if(sortedHand.get(i).getRank().getInt()+1 == sortedHand.get(i+1).getRank().getInt()) {
+				s = true;
+				count++;
+				if(count == 1) {
+					positionList.add(getPos(hand, sortedHand.get(i))+1);
+					count++;
+				}
+				positionList.add(getPos(hand, sortedHand.get(i+1))+1);
+			}else if(sortedHand.get(i).getRank().getInt()+2 == sortedHand.get(i+1).getRank().getInt()) {
+				holes ++;
+				if (holes>1)
+					return null;
+				count++;
+				positionList.add(getPos(hand, sortedHand.get(i+1))+1);
+			}else {
+				if (s == true && count != 4)
+					return null;
+			}
+		}
+		//Check 1 HighCard
+		for(int i = 0; i<positionList.size(); i++) {
+			if(hand.get(positionList.get(i)-1).getRank().getInt() > 10 || hand.get(positionList.get(i)-1).getRank().getInt() == 1) {
+				highCard++;
+			}
+		}
+		
+		if(count == 4 && holes ==1 && highCard == 3) {
+			return positionList;
+		}else {
+			return null;
+		}
+		
+	}
+
+	public static List<Integer> fourToInsideStraightWith0HighCard(List<Card> hand){
+		
+		List<Card> sortedHand = hand;
+		List<Integer> positionList = new ArrayList<>();
+		sortedHand.sort(comparator);
+		Boolean s = false;
+		int count=0;
+		int holes = 0;
+	
+		for(int i = 0; i<sortedHand.size()-1; i++){
+			if(sortedHand.get(i).getRank().getInt()+1 == sortedHand.get(i+1).getRank().getInt()) {
+				s = true;
+				count++;
+				if(count == 1) {
+					positionList.add(getPos(hand, sortedHand.get(i))+1);
+					count++;
+				}
+				positionList.add(getPos(hand, sortedHand.get(i+1))+1);
+			}else if(sortedHand.get(i).getRank().getInt()+2 == sortedHand.get(i+1).getRank().getInt()) {
+				holes ++;
+				if (holes>1)
+					return null;
+				count++;
+				positionList.add(getPos(hand, sortedHand.get(i+1))+1);
+			}else {
+				if (s == true && count != 4)
+					return null;
+			}
+		}
+		
+		if(count == 4 && holes ==1) {
+			return positionList;
+		}else {
+			return null;
+		}
+		
+	}
 	
 	private static List<Integer> getUnsuited(List<Integer> cardList, List<Card> hand) {
 		
@@ -678,53 +1133,5 @@ public class Utils {
 			
 		}
 	};
-
-
-public static List<Integer> fourToRoyalFlush(List<Card> hand){
-	
-	List<Integer> list = Arrays.asList(1,10,11,12,13);
-	
-	List<Integer> positionList = new ArrayList<>();
-	
-	int suit = 0;
-	
-	int position=0;
-	
-	
-	for(Card card : hand){
-			
-		if(list.contains(card.getRank().getValue())) {
-			if(suit==0) {
-				suit=card.getSuit().getValue();
-				positionList.add(position);
-			} else if(card.getSuit().getValue()==suit) {
-				positionList.add(position);
-			}
-				position++;
-			}
-		
-	}
-	
-	if(positionList.size()==4) {	
-		return positionList;
-	}
-	
-	return null;
-}
-
-public static List<Integer> threeToAStraightFlush(int i, List<Card> hand) {
-	// TODO Auto-generated method stub
-	return null;
-}
-
-public static List<Integer> fourToAnInsideStraight(int i, List<Card> hand) {
-	// TODO Auto-generated method stub
-	return null;
-}
-
-public static List<Integer> twoSuitedHighCards(List<Card> hand) {
-	// TODO Auto-generated method stub
-	return null;
-}
 
 }

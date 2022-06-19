@@ -4,14 +4,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
-import Main.Main;
 import card.Card;
 import deck.Deck;
 import deck.Hand;
 import gamemode.GameModeAlias;
 import strategy.DificultHand;
 import strategy.PokerHand;
+import videopoker.Main;
 
 public class Cmd {
 	
@@ -77,7 +76,8 @@ public class Cmd {
 	public static void bet(Integer amount) {
 		if(amount > 0 && amount < 6) {
 			Hand.setBet(amount);
-			System.out.println("player is betting " + amount);
+			if(Main.doPrint) 
+				System.out.println("player is betting " + amount);
 			Main.credit -= amount;
 		}else {
 			System.err.println("b: illegal amount");
@@ -97,29 +97,31 @@ public class Cmd {
 		if(Main.gameMode == GameModeAlias.SIMULATION) {
 			Deck.shuffle();
 		}
+		Main.sumofbets += Hand.getBet(); 
 		ArrayList<Card> cList = new ArrayList<Card>();
 		for(int i = 0; i < 5; i++) {
 			cList.add(Deck.removeCard(0));
 		}
 		Hand.addCard(cList);
-		System.out.print("player's hand ");
-		Hand.print();
-		System.out.println();
+		if(Main.doPrint) {
+			System.out.print("player's hand ");
+			Hand.print();
+			System.out.println();
+		}
 		Cmd.blockedCmds = new CmdAlias[] {CmdAlias.BET, CmdAlias.DEAL};
 	}
 	
 	public static void hold(List<Integer> pos) throws IllegalArgumentException{
 		Cmd.blockedCmds = new CmdAlias[] {CmdAlias.ADVICE, CmdAlias.HOLD, CmdAlias.DEAL};
-
+		
 		Integer ipos[] = new Integer[Hand.getCardCount()-pos.size()];
 		int j = 0;
 		int k = 0;
+		
 		for(int i = 0; i<Hand.getCardCount(); i++){
 			if(i!=pos.get(j)-1) {
-				if(k<ipos.length) {
+				if(k<ipos.length)
 					ipos[k] = i;
-				}
-					k++;
 			}else {
 				if(j<pos.size()-1)
 					j++;
@@ -141,13 +143,15 @@ public class Cmd {
 			 Deck.build();
 		}
 		
-		System.out.print("player's hand ");
-		Hand.print();
-		System.out.println();
 		PokerHand score = Hand.evaluate();
 		Cmd.updateCredit(score);
 		Cmd.addToStats(score);
-		Cmd.printScore(score);
+		if(Main.doPrint) {
+			Cmd.printScore(score);
+			System.out.print("player's hand ");
+			Hand.print();
+			System.out.println();
+		}
 		Hand.clear();
 	}
 	
@@ -168,12 +172,14 @@ public class Cmd {
 			 Deck.build();
 		}
 		
-		System.out.print("player's hand ");
-		Hand.print();
-		System.out.println();
 		PokerHand score = Hand.evaluate();
 		Cmd.updateCredit(score);
-		Cmd.printScore(score);
+		if(Main.doPrint) {
+			System.out.print("player's hand ");
+			Hand.print();
+			System.out.println();
+			Cmd.printScore(score);
+		}
 		Cmd.addToStats(score);
 		Hand.clear();
 	}
@@ -186,7 +192,17 @@ public class Cmd {
 		      if(positionList!=null)
 		    	  break;
 		    }
-	
+		 if(Main.doPrint) {
+			 if(positionList != null) {
+				 System.out.print("Player should hold " );
+				 for(int i = 0 ; i < positionList.size(); i++) {
+					 System.out.print(positionList.get(i).toString() + " ");
+				 }
+				 System.out.println();
+			 }else {
+				 System.out.println("Player discard all cards");
+			 }
+		 }
 		return positionList;
 	}
 	
@@ -199,7 +215,7 @@ public class Cmd {
 		System.out.println("--------------------------");
 		System.out.println("Total		" + stats[stats.length-1].toString());
 		System.out.println("--------------------------");
-		System.out.println("Credit		" + Main.credit.toString() + " " + Double.valueOf(Main.credit)/Double.valueOf(Main.baseCredit)*100);
+		System.out.println("Credit		" + Main.credit.toString() + " " + Double.valueOf(Main.sumofgain)/Double.valueOf(Main.sumofbets)*100);
 	}
 	
 	public static void printScore(PokerHand score) {
@@ -219,8 +235,11 @@ public class Cmd {
 	private static void updateCredit(PokerHand score) {
 		if(score.equals(PokerHand.ROYAL_FLUSH)&&Hand.getBet().equals(5)) {
 			Main.credit += 4000;
+			Main.sumofgain += 4000;
 		}else {
-			Main.credit += Hand.getBet()*Main.multiplier[score.ordinal()];
+			Integer ret = Hand.getBet()*Main.multiplier[score.ordinal()];
+			Main.credit += ret;
+			Main.sumofgain += ret;
 		}
 	}
 }
