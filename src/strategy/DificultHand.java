@@ -127,7 +127,7 @@ public enum DificultHand {
 			public
 			List<Integer> matches(List<Card> hand) {
 				// TODO Auto-generated method stub
-				return Utils.threeOfAKind(hand);
+				return Utils.threeOfAKindEA(hand);
 			}
 
 		},
@@ -139,7 +139,7 @@ public enum DificultHand {
 			public
 			List<Integer> matches(List<Card> hand) {
 
-				return Utils.fourToAStraigthFlush(hand);
+				return Utils.fourToStraightFlush(hand);
 
 			}
 			
@@ -156,24 +156,6 @@ public enum DificultHand {
 
 		},
 		
-		JACKS_OR_BETTER {
-
-			@Override
-			public
-			List<Integer> matches(List<Card> hand) {
-				// TODO Auto-generated method stub
-				return Utils.jacksOrBetter(hand);
-				
-//				for(Card card : hand) {
-//					if(card.getRank().getValue()>10)
-//						return true;
-//				}
-//				return false;
-					
-			}
-			
-
-		},
 		
 		//To advice
 		HIGH_PAIR {
@@ -204,7 +186,7 @@ public enum DificultHand {
 			public
 			List<Integer> matches(List<Card> hand) {
 				// TODO Auto-generated method stub
-				return Utils.threeToARoyalFlush(hand);
+				return Utils.threeToRoyalFlush(hand);
 			}
 
 		},
@@ -215,7 +197,7 @@ public enum DificultHand {
 			public
 			List<Integer> matches(List<Card> hand) {
 				// TODO Auto-generated method stub
-				return Utils.fourToAnOutsideStraigth(hand);
+				return Utils.fourToOutsideStraight(hand);
 			}
 
 		},
@@ -281,7 +263,7 @@ public enum DificultHand {
 			public
 			List<Integer> matches(List<Card> hand) {
 				// TODO Auto-generated method stub
-				return Utils.threeToAFlush(2,hand);
+				return Utils.threeToAStraightFlush(2,hand);
 			}
 
 		},
@@ -369,7 +351,7 @@ public enum DificultHand {
 			public
 			List<Integer> matches(List<Card> hand) {
 				// TODO Auto-generated method stub
-				return Utils.threeToAFlush(1,hand);
+				return Utils.threeToAStraightFlush(1,hand);
 			}
 
 		},
@@ -402,7 +384,11 @@ public enum DificultHand {
 			public
 			List<Integer> matches(List<Card> hand) {
 				// TODO Auto-generated method stub
-				return Utils.KQOrKJUnsuited(hand);
+				List<Integer> list = Utils.KQUnsuited(hand);
+				if(list == null) {
+					list = Utils.KJUnsuited(hand);
+				}
+				return list;
 			}
 
 		},
@@ -413,7 +399,7 @@ public enum DificultHand {
 			public
 			List<Integer> matches(List<Card> hand) {
 				// TODO Auto-generated method stub
-				return Utils.Ace(hand);
+				return Utils.ace(hand);
 			}
 
 		},
@@ -435,7 +421,14 @@ public enum DificultHand {
 			public
 			List<Integer> matches(List<Card> hand) {
 				// TODO Auto-generated method stub
-				return Utils.JQK(hand);
+				List<Integer> list = Utils.jack(hand);
+				if(list == null) {
+					list = Utils.queen(hand);
+				}
+				if(list == null) {
+					list = Utils.king(hand);
+				}
+				return list;
 			}
 
 		},
@@ -457,23 +450,10 @@ public enum DificultHand {
 				public
 				List<Integer> matches(List<Card> hand) {
 					// TODO Auto-generated method stub
-					return Utils.threeToAFlush(0,hand);
+					return Utils.threeToAStraightFlush(0,hand);
 				}
 
 			},
-		 
-		 DISCARD_EVERYTHING  {
-
-				@Override
-				public
-				List<Integer> matches(List<Card> hand) {
-					// TODO Auto-generated method stub
-					return Utils.discardEverything(hand);
-				}
-
-			},
-		 
-		 
 
 		
 		NONE {

@@ -236,7 +236,7 @@ public class Utils {
 			return null;
 	}
 
-	public static List<Integer> fourOfAKind(List<Card> hand){
+	public static List<Integer> fourOfAKind(String type,List<Card> hand){
 		return null;
 	}
 	
@@ -268,8 +268,8 @@ public class Utils {
 			return null;
 	}
 	
-	public static List<Integer> flush(List<Card> hand){
-		if(Utils.isFlush("FLUSH",hand)) {
+	public static List<Integer> flush(String type,List<Card> hand){
+		if(Utils.isFlush(type,hand)) {
 			List<Integer> positionList = new ArrayList<>();
 			for (int i = 0; i<hand.size(); i++) {
 				positionList.add(i+1);
@@ -712,92 +712,17 @@ public static List<Integer> fourToRoyalFlush(List<Card> hand){
 	return null;
 }
 
-public static List<Integer> discardEverything(List<Card> hand) {
+public static List<Integer> threeToAStraightFlush(int i, List<Card> hand) {
 	// TODO Auto-generated method stub
 	return null;
 }
-
-
-public static List<Integer> threeToAFlush(int i, List<Card> hand) {
-	// TODO Auto-generated method stub
-	return null;
-}
-
 
 public static List<Integer> fourToAnInsideStraight(int i, List<Card> hand) {
 	// TODO Auto-generated method stub
 	return null;
 }
 
-
-public static List<Integer> JQK(List<Card> hand) {
-	// TODO Auto-generated method stub
-	return null;
-}
-
-
-public static List<Integer> Ace(List<Card> hand) {
-	// TODO Auto-generated method stub
-	return null;
-}
-
-
-public static List<Integer> KQOrKJUnsuited(List<Card> hand) {
-	// TODO Auto-generated method stub
-	return null;
-}
-
-
-public static List<Integer> threeToAStraightFlush(int i, List<Card> hand) {
-	// TODO Auto-generated method stub
-	return null;
-}
-
-
 public static List<Integer> twoSuitedHighCards(List<Card> hand) {
-	// TODO Auto-generated method stub
-	return null;
-}
-
-
-public static List<Integer> fourToAnOutsideStraigth(List<Card> hand) {
-	// TODO Auto-generated method stub
-	return null;
-}
-
-
-public static List<Integer> threeToARoyalFlush(List<Card> hand) {
-	// TODO Auto-generated method stub
-	return null;
-}
-
-
-public static List<Integer> jacksOrBetter(List<Card> hand) {
-	// TODO Auto-generated method stub
-	return null;
-}
-
-
-public static List<Integer> fourToAStraigthFlush(List<Card> hand) {
-	// TODO Auto-generated method stub
-	return null;
-}
-
-
-public static List<Integer> threeOfAKind(List<Card> hand) {
-	// TODO Auto-generated method stub
-	return null;
-}
-
-
-public static List<Integer> flush(String string, List<Card> hand) {
-	// TODO Auto-generated method stub
-	return null;
-}
-
-
-
-public static List<Integer> fourOfAKind(String string, List<Card> hand) {
 	// TODO Auto-generated method stub
 	return null;
 }
