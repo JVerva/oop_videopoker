@@ -97,6 +97,7 @@ public class Cmd {
 		if(Main.gameMode == GameModeAlias.SIMULATION) {
 			Deck.shuffle();
 		}
+		Main.sumofbets += Hand.getBet(); 
 		ArrayList<Card> cList = new ArrayList<Card>();
 		for(int i = 0; i < 5; i++) {
 			cList.add(Deck.removeCard(0));
@@ -215,7 +216,7 @@ public class Cmd {
 		System.out.println("--------------------------");
 		System.out.println("Total		" + stats[stats.length-1].toString());
 		System.out.println("--------------------------");
-		System.out.println("Credit		" + Main.credit.toString() + " " + Double.valueOf(Main.credit)/Double.valueOf(Main.baseCredit)*100);
+		System.out.println("Credit		" + Main.credit.toString() + " " + Double.valueOf(Main.sumofgain)*100/Double.valueOf(Main.sumofbets));
 	}
 	
 	public static void printScore(PokerHand score) {
@@ -235,8 +236,11 @@ public class Cmd {
 	private static void updateCredit(PokerHand score) {
 		if(score.equals(PokerHand.ROYAL_FLUSH)&&Hand.getBet().equals(5)) {
 			Main.credit += 4000;
+			Main.sumofgain += 4000;
 		}else {
-			Main.credit += Hand.getBet()*Main.multiplier[score.ordinal()];
+			Integer ret = Hand.getBet()*Main.multiplier[score.ordinal()];
+			Main.credit += ret;
+			Main.sumofgain += ret;
 		}
 	}
 }
