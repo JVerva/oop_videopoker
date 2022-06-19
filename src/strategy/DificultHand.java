@@ -39,6 +39,18 @@ public enum DificultHand {
 		
 	},
 	
+
+	FOUR_2_4 {
+		
+		@Override
+		public
+		List<Integer> matches(List<Card> hand) {
+
+			return Utils.fourOfAKind("FOUR_2_4", hand);
+
+		}
+	},
+	
 	FOUR_5_K {
 		
 		@Override
@@ -51,17 +63,6 @@ public enum DificultHand {
 		
 	},
 
-	FOUR_2_4 {
-		
-		@Override
-		public
-		List<Integer> matches(List<Card> hand) {
-
-			return Utils.fourOfAKind("FOUR_2_4", hand);
-
-		}
-		
-	},
 	
 	FOUR_TO_ROYAL_FLUSH {
 		
