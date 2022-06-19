@@ -1,6 +1,7 @@
 package card;
 
-public class Card {
+
+public class Card{
 	private Rank rank;
 	private Suit suit;
 	/**

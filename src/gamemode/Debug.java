@@ -11,7 +11,7 @@ import deck.Deck;
 
 public class Debug {
 	
-	static ArrayList<String> cmds = new ArrayList<String>();
+	static private ArrayList<String> cmds = new ArrayList<String>();
 	
 	public static void play(String cmdFileName, String deckFileName) throws FileNotFoundException, IndexOutOfBoundsException {
 		Debug.getCmds(cmdFileName);

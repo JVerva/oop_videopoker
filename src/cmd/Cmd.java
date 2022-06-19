@@ -3,7 +3,7 @@ package cmd;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
+
 
 import Main.Main;
 import card.Card;
@@ -126,7 +126,7 @@ public class Cmd {
 		}
 			
 		for(int i = 0; i<pos.size(); i++) {
-			if(pos.get(i)>4) {
+			if(pos.get(i)>5) {
 				throw new IllegalArgumentException("Invalid card position:" + pos.get(i).toString());
 			}
 		}

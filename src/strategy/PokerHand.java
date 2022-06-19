@@ -1,10 +1,6 @@
 package strategy;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import card.Card;
 
@@ -21,7 +17,6 @@ public enum PokerHand {
 		}
 	},
 	
-
 	STRAIGHT_FLUSH {
 		
 		@Override
@@ -30,7 +25,6 @@ public enum PokerHand {
 			return Utils.isFlush("STRAIGHT_FLUSH", hand);
 		}
 	},
-	
 	
 	FOUR_ACES {
 		
@@ -66,9 +60,9 @@ public enum PokerHand {
 		}
 		
 	},
-	
+
 	FULL_HOUSE {
-		
+	
 		@Override
 		public
 		boolean matches(List<Card> hand) {
@@ -77,10 +71,6 @@ public enum PokerHand {
 		}
 	},
 
-	
-	
-	
-	
 	FLUSH {
 		
 		@Override
@@ -90,84 +80,45 @@ public enum PokerHand {
 			return Utils.isFlush("FLUSH", hand);
 		}
 	},
-	
-STRAIGHT {
-		
+
+	STRAIGHT {
 		@Override
-		public
-		boolean matches(List<Card> hand) {
-
-//	    	int firstCardSuit = playerHand.get(0).getSuit();
-	    	List<Integer> sortedCardRanks = new ArrayList<>();
-	    	List<Integer> cardSuits = new ArrayList<>();
-
-	    	//Create an Integer list containing all the player's ranks
-	    	for(Card card : hand){
-	    		sortedCardRanks.add(card.getRank().getValue());
-	    		cardSuits.add(card.getSuit().getValue());
-	    	}
-
-	    	//Sort the ranks
-	    	Collections.sort(sortedCardRanks);
-
-	    	//Check to see that all card suits are not identical
-	    	Set<Integer> suitSet = new HashSet<>(cardSuits);
-
-	    	//If set size is smaller, there are duplicates, meaning more than one suit, which a Straight requires
-	    	if(suitSet.size() > cardSuits.size())
-	    		return false;
-
-	    	//Go Step by step to see if the next card's rank is only 1 more than it
-	    	for(int i = 0; i < 4; i++){
-	    		if(!(sortedCardRanks.get(i) == (sortedCardRanks.get(i+1) - 1)))
-	    			return false;
-	    	}
-
-	    	return true;
+		public boolean matches(List<Card> hand) {
+			return Utils.isFullHouse(hand);
 		}
 	},
 
 
+	THREE_OF_A_KIND {
 
-		THREE_OF_A_KIND {
+		@Override
+		public
+		boolean matches(List<Card> hand) {
+			// TODO Auto-generated method stub
+			return Utils.isThreeOfAKind(hand);
+		}
+	},
 
-			@Override
-			public
-			boolean matches(List<Card> hand) {
-				// TODO Auto-generated method stub
-				return Utils.isThreeOfAKind(hand);
-			}
+	TWO_PAIR {
 
-		},
-		
+		@Override
+		public
+		boolean matches(List<Card> hand) {
+			// TODO Auto-generated method stub
+			return Utils.isTwoPair(hand);
+		}
 
-		TWO_PAIR {
+	},
 
-			@Override
-			public
-			boolean matches(List<Card> hand) {
-				// TODO Auto-generated method stub
-				return Utils.isTwoPair(hand);
-			}
-
-		},
 		
 		JACKS_OR_BETTER {
 
-			@Override
-			public
-			boolean matches(List<Card> hand) {
-				// TODO Auto-generated method stub
-				return Utils.isJacksOrBetter(hand);
-				
-//				for(Card card : hand) {
-//					if(card.getRank().getValue()>10)
-//						return true;
-//				}
-//				return false;
-					
+		@Override
+		public
+		boolean matches(List<Card> hand) {
+			// TODO Auto-generated method stub
+			return Utils.isJacksOrBetter(hand);
 			}
-			
 
 		},
 		 
@@ -182,5 +133,5 @@ STRAIGHT {
 		};
 
 		public abstract boolean matches(List<Card> hand);
-		
-	}
+}
+
