@@ -304,6 +304,7 @@ public class Utils {
 		List<Card> sortedHand = hand;
 		List<Integer> positionList = new ArrayList<>();
 		sortedHand.sort(comparator);
+		
 		Boolean s = false;
 		int count=0;
 		int holes = 0;
@@ -314,6 +315,7 @@ public class Utils {
 				count++;
 				if(count == 1) {
 					positionList.add(getPos(hand, sortedHand.get(i))+1);
+					count++;
 				}
 				positionList.add(getPos(hand, sortedHand.get(i+1))+1);
 			}else if(sortedHand.get(i).getRank().getInt()+2 == sortedHand.get(i+1).getRank().getInt() && sortedHand.get(i).getSuit() == sortedHand.get(i+1).getSuit()) {
@@ -510,6 +512,7 @@ public class Utils {
 				count++;
 				if(count == 1) {
 					positionList.add(getPos(hand, sortedHand.get(i))+1);
+					count++;
 				}
 				positionList.add(getPos(hand, sortedHand.get(i+1))+1);
 			}else if(sortedHand.get(i).getRank().getInt()+2 == sortedHand.get(i+1).getRank().getInt() && sortedHand.get(i).getSuit() == sortedHand.get(i+1).getSuit()) {
@@ -570,6 +573,7 @@ public class Utils {
 				count++;
 				if(count == 1) {
 					positionList.add(getPos(hand, sortedHand.get(i))+1);
+					count++;
 				}
 				positionList.add(getPos(hand, sortedHand.get(i+1))+1);
 			}else if(sortedHand.get(i).getRank().getInt()+2 == sortedHand.get(i+1).getRank().getInt() && sortedHand.get(i).getSuit() == sortedHand.get(i+1).getSuit()) {
@@ -628,6 +632,7 @@ public class Utils {
 				count++;
 				if(count == 1) {
 					positionList.add(getPos(hand, sortedHand.get(i))+1);
+					count++;
 				}
 				positionList.add(getPos(hand, sortedHand.get(i+1))+1);
 			}else if(sortedHand.get(i).getRank().getInt()+2 == sortedHand.get(i+1).getRank().getInt() && sortedHand.get(i).getSuit() == sortedHand.get(i+1).getSuit()) {
@@ -869,6 +874,7 @@ public class Utils {
 				count++;
 				if(count == 1) {
 					positionList.add(getPos(hand, sortedHand.get(i))+1);
+					count++;
 				}
 				positionList.add(getPos(hand, sortedHand.get(i+1))+1);
 			}else {
@@ -898,6 +904,7 @@ public class Utils {
 				count++;
 				if(count == 1) {
 					positionList.add(getPos(hand, sortedHand.get(i))+1);
+					count++;
 				}
 				positionList.add(getPos(hand, sortedHand.get(i+1))+1);
 			}else if(sortedHand.get(i).getRank().getInt()+2 == sortedHand.get(i+1).getRank().getInt()) {
@@ -942,6 +949,7 @@ public class Utils {
 				count++;
 				if(count == 1) {
 					positionList.add(getPos(hand, sortedHand.get(i))+1);
+					count++;
 				}
 				positionList.add(getPos(hand, sortedHand.get(i+1))+1);
 			}else if(sortedHand.get(i).getRank().getInt()+2 == sortedHand.get(i+1).getRank().getInt()) {
@@ -986,6 +994,7 @@ public class Utils {
 				count++;
 				if(count == 1) {
 					positionList.add(getPos(hand, sortedHand.get(i))+1);
+					count++;
 				}
 				positionList.add(getPos(hand, sortedHand.get(i+1))+1);
 			}else if(sortedHand.get(i).getRank().getInt()+2 == sortedHand.get(i+1).getRank().getInt()) {
@@ -1029,6 +1038,7 @@ public class Utils {
 				count++;
 				if(count == 1) {
 					positionList.add(getPos(hand, sortedHand.get(i))+1);
+					count++;
 				}
 				positionList.add(getPos(hand, sortedHand.get(i+1))+1);
 			}else if(sortedHand.get(i).getRank().getInt()+2 == sortedHand.get(i+1).getRank().getInt()) {
