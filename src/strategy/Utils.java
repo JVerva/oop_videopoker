@@ -147,7 +147,6 @@ public class Utils {
 	}
 
 	
-	
 	public static List<Integer> straightFlush(List<Card> hand){
 		if(Utils.isFlush("FLUSH", hand)) {
 			List<Integer> positionList = new ArrayList<>();
@@ -465,6 +464,126 @@ public class Utils {
 		return Utils.getUnsuited(list, hand);
 	}
 	
+	public static List<Integer> threeToStraightFlushType1(List<Card> hand){
+		
+		List<Card> sortedHand = hand;
+		List<Integer> positionList = new ArrayList<>();
+		sortedHand.sort(comparator);
+		Boolean s = false;
+		int count=0;
+		int holes = 0;
+		int HighCard = 0;
+		
+		
+	
+		for(int i = 0; i<sortedHand.size()-1; i++){
+			if(sortedHand.get(i).getRank().getInt()+1 == sortedHand.get(i+1).getRank().getInt() && sortedHand.get(i).getSuit() == sortedHand.get(i+1).getSuit()) {
+				s = true;
+				count++;
+				if(count == 1) {
+					positionList.add(getPos(hand, sortedHand.get(i))+1);
+				}
+				positionList.add(getPos(hand, sortedHand.get(i+1))+1);
+			}else if(sortedHand.get(i).getRank().getInt()+2 == sortedHand.get(i+1).getRank().getInt() && sortedHand.get(i).getSuit() == sortedHand.get(i+1).getSuit()) {
+				holes ++;
+				if (holes>2)
+					return null;
+				count++;
+				positionList.add(getPos(hand, sortedHand.get(i+1))+1);
+			}else if(sortedHand.get(i).getRank().getInt()+3 == sortedHand.get(i+1).getRank().getInt() && sortedHand.get(i).getSuit() == sortedHand.get(i+1).getSuit()) {
+				holes ++;
+				holes ++;
+				if (holes>2)
+					return null;
+				count++;
+				positionList.add(getPos(hand, sortedHand.get(i+1))+1);
+			}else {
+				if (s == true && count != 3)
+					return null;
+			}
+		}
+		//check type 1
+		for(int i = 0; i<positionList.size(); i++) {
+			if(hand.get(positionList.get(i)).getRank().getInt() > 10) {
+				HighCard++;
+			}
+			if(hand.get(positionList.get(i)).getRank().getInt() == 1) {
+				return null;
+			}
+		}
+		if(hand.get(positionList.get(1)).getRank().getInt() == 2 && hand.get(positionList.get(2)).getRank().getInt() == 3 && hand.get(positionList.get(3)).getRank().getInt() == 4 ) {
+			return null;
+		}
+		
+		if(count == 3 && HighCard == 2) {
+			return positionList;
+		}else {
+			return null;
+		}
+		
+	}
+	
+	public static List<Integer> threeToStraightFlushType2(List<Card> hand){
+		
+		List<Card> sortedHand = hand;
+		List<Integer> positionList = new ArrayList<>();
+		sortedHand.sort(comparator);
+		Boolean s = false;
+		int count=0;
+		int holes = 0;
+		int HighCard = 0;
+		int sequence = 0;
+		
+		
+	
+		for(int i = 0; i<sortedHand.size()-1; i++){
+			if(sortedHand.get(i).getRank().getInt()+1 == sortedHand.get(i+1).getRank().getInt() && sortedHand.get(i).getSuit() == sortedHand.get(i+1).getSuit()) {
+				s = true;
+				count++;
+				if(count == 1) {
+					positionList.add(getPos(hand, sortedHand.get(i))+1);
+				}
+				positionList.add(getPos(hand, sortedHand.get(i+1))+1);
+			}else if(sortedHand.get(i).getRank().getInt()+2 == sortedHand.get(i+1).getRank().getInt() && sortedHand.get(i).getSuit() == sortedHand.get(i+1).getSuit()) {
+				holes ++;
+				if (holes>2)
+					return null;
+				count++;
+				positionList.add(getPos(hand, sortedHand.get(i+1))+1);
+			}else if(sortedHand.get(i).getRank().getInt()+3 == sortedHand.get(i+1).getRank().getInt() && sortedHand.get(i).getSuit() == sortedHand.get(i+1).getSuit()) {
+				holes ++;
+				holes ++;
+				if (holes>2)
+					return null;
+				count++;
+				positionList.add(getPos(hand, sortedHand.get(i+1))+1);
+			}else {
+				if (s == true && count != 3)
+					return null;
+			}
+		}
+		//check type 2
+		for(int i = 0; i<positionList.size(); i++) {
+			if(hand.get(positionList.get(i)).getRank().getInt() > 10) {
+				HighCard++;
+			}
+			if(hand.get(positionList.get(i)).getRank().getInt() == 1) {
+				HighCard++;
+			}
+		}
+		if(hand.get(positionList.get(1)).getRank().getInt() == 2 && hand.get(positionList.get(2)).getRank().getInt() == 3 && hand.get(positionList.get(3)).getRank().getInt() == 4 ) {
+			sequence = 1;
+		}
+		
+		if(count == 3 && (HighCard == 1 || sequence == 1)) {
+			return positionList;
+		}else {
+			return null;
+		}
+		
+	}
+
+	
 	public static List<Integer> KQJUnsuited(List<Card> hand){
 		
 		List<Integer> list = new ArrayList<>();
@@ -566,7 +685,6 @@ public class Utils {
 		}
 		return null;
 	}
-	
 	
 	private static List<Integer> getUnsuited(List<Integer> cardList, List<Card> hand) {
 		
