@@ -3,8 +3,11 @@ package strategy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.Map.Entry;
 
 import card.Card;
@@ -59,6 +62,80 @@ public class Utils {
 		return map.containsValue(3) && map.containsValue(2);
 	}
 
+	public static boolean isStraight(List<Card> hand) {
+		
+	
+	//	int firstCardSuit = playerHand.get(0).getSuit();
+		List<Integer> sortedCardRanks = new ArrayList<>();
+		List<Integer> cardSuits = new ArrayList<>();
+	
+		//Create an Integer list containing all the player's ranks
+		for(Card card : hand){
+			sortedCardRanks.add(card.getRank().getValue());
+			cardSuits.add(card.getSuit().getValue());
+		}
+	
+		//Sort the ranks
+		Collections.sort(sortedCardRanks);
+	
+		//Check to see that all card suits are not identical
+		Set<Integer> suitSet = new HashSet<>(cardSuits);
+	
+		//If set size is smaller, there are duplicates, meaning more than one suit, which a Straight requires
+		if(suitSet.size() > cardSuits.size())
+			return false;
+	
+		//Go Step by step to see if the next card's rank is only 1 more than it
+		for(int i = 0; i < 4; i++){
+			if(!(sortedCardRanks.get(i) == (sortedCardRanks.get(i+1) - 1)))
+				return false;
+		}
+	
+		return true;
+	}
+
+	public static List<Integer> straight(List<Card> hand) {
+		
+	
+	//	int firstCardSuit = playerHand.get(0).getSuit();
+		List<Integer> sortedCardRanks = new ArrayList<>();
+		List<Integer> cardSuits = new ArrayList<>();
+		List<Integer> positionList = new ArrayList<>();
+		int count = 0;
+	
+		//Create an Integer list containing all the player's ranks
+		for(Card card : hand){
+			sortedCardRanks.add(card.getRank().getValue());
+			cardSuits.add(card.getSuit().getValue());
+		}
+	
+		//Sort the ranks
+		Collections.sort(sortedCardRanks);
+	
+		//Check to see that all card suits are not identical
+		Set<Integer> suitSet = new HashSet<>(cardSuits);
+	
+		//If set size is smaller, there are duplicates, meaning more than one suit, which a Straight requires
+		if(suitSet.size() > cardSuits.size())
+			return null;
+	
+		//Go Step by step to see if the next card's rank is only 1 more than it
+		for(int i = 0; i < 4; i++){
+			
+			if(!(sortedCardRanks.get(i) == (sortedCardRanks.get(i+1) - 1)))
+				count++;
+		}
+		
+		if(count==5) {
+			for(int i=0;i<5;i++) {
+				positionList.add(i);
+			}
+		}
+			return null;
+		
+	}
+		
+
 	public static boolean isFlush(String type, List<Card> hand) {
 		
 		List<Integer> list = new ArrayList<>();
@@ -69,33 +146,33 @@ public class Utils {
 		
 		case "ROYAL_FLUSH":
 			list = Arrays.asList(1,10,11,12,13);
-			 break;
+			for(Card card : hand){
+				if(card.getSuit().getValue() != suit || !list.contains(card.getRank().getValue()))
+					return false;
+			}
+			return true;
 		case "STRAIGHT_FLUSH":
-			 list = Arrays.asList(9,10,11,12,13);
+			if(isStraight(hand)) {
+				for(Card card : hand){
+					if(card.getSuit().getValue() != suit)
+						return false;
+				}
+				return true;
+			}
+			 
 			 break;
 		case "FLUSH":
 			for(Card card : hand){
 				if(card.getSuit().getValue() != suit)
 					return false;
 			}
-	
 			return true;
-		}	
-
-
-		for(Card card : hand){
-			if(card.getSuit().getValue() != suit || !list.contains(card.getRank().getValue()))
-				return false;
 		}
-	
-		return true;
-	
-		
+		return false;
 	}
 
 	public static boolean isThreeOfAKind(List<Card> hand){
 		HashMap<Integer,Integer> rankMap = new HashMap<>();
-	
 		for(Card card : hand){
 			if(!rankMap.containsKey(card.getRank().getValue())){
 				rankMap.put(card.getRank().getValue(), 1);
@@ -174,38 +251,6 @@ public class Utils {
 			return null;
 	}
 
-	public static List<Integer> fourToRoyalFlush(List<Card> hand){
-		
-		List<Integer> list = Arrays.asList(1,10,11,12,13);
-		
-		List<Integer> positionList = new ArrayList<>();
-		
-		int suit = 0;
-		
-		int position=0;
-		
-		
-		for(Card card : hand){
-				
-			if(list.contains(card.getRank().getValue()))
-				if(suit==0) {
-					suit=card.getSuit().getValue();
-					positionList.add(position+1);
-				} else if(card.getSuit().getValue()==suit) {
-					positionList.add(position+1);
-				}
-			position++;
-		}
-		
-		if(positionList.size()!=4) {
-			return null;
-		}
-		
-		return positionList;
-		
-		
-	}
-
 	public static List<Integer> threeAces(List<Card> hand){
 		
 		int count=0;
@@ -221,10 +266,6 @@ public class Utils {
 			return positionList;
 		else
 			return null;
-	}
-	
-	public static List<Integer> straight(List<Card> hand){
-		return null;
 	}
 	
 	public static List<Integer> flush(List<Card> hand){
@@ -637,5 +678,128 @@ public class Utils {
 			
 		}
 	};
+
+
+public static List<Integer> fourToRoyalFlush(List<Card> hand){
 	
+	List<Integer> list = Arrays.asList(1,10,11,12,13);
+	
+	List<Integer> positionList = new ArrayList<>();
+	
+	int suit = 0;
+	
+	int position=0;
+	
+	
+	for(Card card : hand){
+			
+		if(list.contains(card.getRank().getValue())) {
+			if(suit==0) {
+				suit=card.getSuit().getValue();
+				positionList.add(position);
+			} else if(card.getSuit().getValue()==suit) {
+				positionList.add(position);
+			}
+				position++;
+			}
+		
+	}
+	
+	if(positionList.size()==4) {	
+		return positionList;
+	}
+	
+	return null;
+}
+
+public static List<Integer> discardEverything(List<Card> hand) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+
+public static List<Integer> threeToAFlush(int i, List<Card> hand) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+
+public static List<Integer> fourToAnInsideStraight(int i, List<Card> hand) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+
+public static List<Integer> JQK(List<Card> hand) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+
+public static List<Integer> Ace(List<Card> hand) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+
+public static List<Integer> KQOrKJUnsuited(List<Card> hand) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+
+public static List<Integer> threeToAStraightFlush(int i, List<Card> hand) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+
+public static List<Integer> twoSuitedHighCards(List<Card> hand) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+
+public static List<Integer> fourToAnOutsideStraigth(List<Card> hand) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+
+public static List<Integer> threeToARoyalFlush(List<Card> hand) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+
+public static List<Integer> jacksOrBetter(List<Card> hand) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+
+public static List<Integer> fourToAStraigthFlush(List<Card> hand) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+
+public static List<Integer> threeOfAKind(List<Card> hand) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+
+public static List<Integer> flush(String string, List<Card> hand) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+
+
+public static List<Integer> fourOfAKind(String string, List<Card> hand) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
 }
