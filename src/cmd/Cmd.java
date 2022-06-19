@@ -122,7 +122,6 @@ public class Cmd {
 			if(i!=pos.get(j)-1) {
 				if(k<ipos.length)
 					ipos[k] = i;
-				k++;
 			}else {
 				if(j<pos.size()-1)
 					j++;
