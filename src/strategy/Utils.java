@@ -582,7 +582,61 @@ public class Utils {
 		}
 		
 	}
-
+	
+	public static List<Integer> threeToStraightFlushType3(List<Card> hand){
+		
+		List<Card> sortedHand = hand;
+		List<Integer> positionList = new ArrayList<>();
+		sortedHand.sort(comparator);
+		Boolean s = false;
+		int count=0;
+		int holes = 0;
+		int HighCard = 0;		
+		
+	
+		for(int i = 0; i<sortedHand.size()-1; i++){
+			if(sortedHand.get(i).getRank().getInt()+1 == sortedHand.get(i+1).getRank().getInt() && sortedHand.get(i).getSuit() == sortedHand.get(i+1).getSuit()) {
+				s = true;
+				count++;
+				if(count == 1) {
+					positionList.add(getPos(hand, sortedHand.get(i))+1);
+				}
+				positionList.add(getPos(hand, sortedHand.get(i+1))+1);
+			}else if(sortedHand.get(i).getRank().getInt()+2 == sortedHand.get(i+1).getRank().getInt() && sortedHand.get(i).getSuit() == sortedHand.get(i+1).getSuit()) {
+				holes ++;
+				if (holes>2)
+					return null;
+				count++;
+				positionList.add(getPos(hand, sortedHand.get(i+1))+1);
+			}else if(sortedHand.get(i).getRank().getInt()+3 == sortedHand.get(i+1).getRank().getInt() && sortedHand.get(i).getSuit() == sortedHand.get(i+1).getSuit()) {
+				holes ++;
+				holes ++;
+				if (holes>2)
+					return null;
+				count++;
+				positionList.add(getPos(hand, sortedHand.get(i+1))+1);
+			}else {
+				if (s == true && count != 3)
+					return null;
+			}
+		}
+		//check type 3
+		for(int i = 0; i<positionList.size(); i++) {
+			if(hand.get(positionList.get(i)).getRank().getInt() > 10) {
+				HighCard++;
+			}
+			if(hand.get(positionList.get(i)).getRank().getInt() == 1) {
+				HighCard++;
+			}
+		}
+		
+		if(count == 3 && HighCard == 0) {
+			return positionList;
+		}else {
+			return null;
+		}
+		
+	}
 	
 	public static List<Integer> KQJUnsuited(List<Card> hand){
 		
