@@ -241,7 +241,7 @@ public enum DificultHand {
 			public
 			List<Integer> matches(List<Card> hand) {
 				// TODO Auto-generated method stub
-				return Utils.fourToAnInsideStraight(3,hand);
+				return Utils.fourToInsideStraightWith3HighCards(hand);
 			}
 
 		},
@@ -285,7 +285,7 @@ public enum DificultHand {
 			public
 			List<Integer> matches(List<Card> hand) {
 				// TODO Auto-generated method stub
-				return Utils.fourToAnInsideStraight(2,hand);
+				return Utils.fourToInsideStraightWith2HighCards(hand);
 			}
 
 		},
@@ -307,7 +307,7 @@ public enum DificultHand {
 			public
 			List<Integer> matches(List<Card> hand) {
 				// TODO Auto-generated method stub
-				return Utils.fourToAnInsideStraight(1,hand);
+				return Utils.fourToInsideStraightWith1HighCard(hand);
 			}
 
 		},
@@ -439,7 +439,7 @@ public enum DificultHand {
 			public
 			List<Integer> matches(List<Card> hand) {
 				// TODO Auto-generated method stub
-				return Utils.fourToAnInsideStraight(0,hand);
+				return Utils.fourToInsideStraightWith0HighCard(hand);
 			}
 
 		},

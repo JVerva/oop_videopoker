@@ -77,7 +77,8 @@ public class Cmd {
 	public static void bet(Integer amount) {
 		if(amount > 0 && amount < 6) {
 			Hand.setBet(amount);
-			System.out.println("player is betting " + amount);
+			if(Main.doPrint) 
+				System.out.println("player is betting " + amount);
 			Main.credit -= amount;
 		}else {
 			System.err.println("b: illegal amount");
@@ -102,22 +103,25 @@ public class Cmd {
 			cList.add(Deck.removeCard(0));
 		}
 		Hand.addCard(cList);
-		System.out.print("player's hand ");
-		Hand.print();
-		System.out.println();
+		if(Main.doPrint) {
+			System.out.print("player's hand ");
+			Hand.print();
+			System.out.println();
+		}
 		Cmd.blockedCmds = new CmdAlias[] {CmdAlias.BET, CmdAlias.DEAL};
 	}
 	
 	public static void hold(List<Integer> pos) throws IllegalArgumentException{
 		Cmd.blockedCmds = new CmdAlias[] {CmdAlias.ADVICE, CmdAlias.HOLD, CmdAlias.DEAL};
 		
-		
 		Integer ipos[] = new Integer[Hand.getCardCount()-pos.size()];
 		int j = 0;
 		int k = 0;
+		
 		for(int i = 0; i<Hand.getCardCount(); i++){
 			if(i!=pos.get(j)-1) {
-				ipos[k] = i;
+				if(k<ipos.length)
+					ipos[k] = i;
 				k++;
 			}else {
 				if(j<pos.size()-1)
@@ -140,13 +144,15 @@ public class Cmd {
 			 Deck.build();
 		}
 		
-		System.out.print("player's hand ");
-		Hand.print();
-		System.out.println();
 		PokerHand score = Hand.evaluate();
 		Cmd.updateCredit(score);
 		Cmd.addToStats(score);
-		Cmd.printScore(score);
+		if(Main.doPrint) {
+			Cmd.printScore(score);
+			System.out.print("player's hand ");
+			Hand.print();
+			System.out.println();
+		}
 		Hand.clear();
 	}
 	
@@ -167,12 +173,14 @@ public class Cmd {
 			 Deck.build();
 		}
 		
-		System.out.print("player's hand ");
-		Hand.print();
-		System.out.println();
 		PokerHand score = Hand.evaluate();
 		Cmd.updateCredit(score);
-		Cmd.printScore(score);
+		if(Main.doPrint) {
+			System.out.print("player's hand ");
+			Hand.print();
+			System.out.println();
+			Cmd.printScore(score);
+		}
 		Cmd.addToStats(score);
 		Hand.clear();
 	}
@@ -185,7 +193,17 @@ public class Cmd {
 		      if(positionList!=null)
 		    	  break;
 		    }
-	
+		 if(Main.doPrint) {
+			 if(positionList != null) {
+				 System.out.print("Player should hold " );
+				 for(int i = 0 ; i < positionList.size(); i++) {
+					 System.out.print(positionList.get(i).toString() + " ");
+				 }
+				 System.out.println();
+			 }else {
+				 System.out.println("Player discard all cards");
+			 }
+		 }
 		return positionList;
 	}
 	

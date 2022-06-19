@@ -84,7 +84,7 @@ public enum PokerHand {
 	STRAIGHT {
 		@Override
 		public boolean matches(List<Card> hand) {
-			return Utils.isFullHouse(hand);
+			return Utils.isStraight(hand);
 		}
 	},
 

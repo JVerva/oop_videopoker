@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import Main.Main;
 import cmd.Cmd;
 import cmd.CmdAlias;
 import deck.Deck;
@@ -18,8 +19,8 @@ public class Debug {
 		Deck.build(deckFileName);
 		
 		for(int i=0; i<cmds.size(); i++) {
-			
-			System.out.print("-cmd " + cmds.get(i).charAt(0));
+			if(Main.doPrint) 
+				System.out.print("-cmd " + cmds.get(i).charAt(0));
 			CmdAlias cmd = CmdAlias.getCmd(cmds.get(i).charAt(0));
 			
 			if(cmd.equals(CmdAlias.BET)||cmd.equals(CmdAlias.HOLD)){
@@ -28,12 +29,14 @@ public class Debug {
 					int j = 0;
 					while(j+i+1<cmds.size()) {
 						param.add(Integer.parseInt(cmds.get(j+i+1)));
-						System.out.print(" " + param.get(j).toString());
+						if(Main.doPrint) 
+							System.out.print(" " + param.get(j).toString());
 						j++;
 					}
 				}catch(NumberFormatException e) {
 				}
-					System.out.println();
+					if(Main.doPrint)
+						System.out.println();
 					if(param.size()>0) {
 						Cmd.execute(cmd, param);
 						i += param.size();
@@ -41,10 +44,12 @@ public class Debug {
 						Cmd.execute(cmd);
 					}
 			}else {
-				System.out.println();
+				if(Main.doPrint) 
+					System.out.println();
 				Cmd.execute(cmd);
 			}
-			System.out.println();
+				if(Main.doPrint)
+					System.out.println();
 		}
 		
 	}

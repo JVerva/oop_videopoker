@@ -96,41 +96,13 @@ public class Utils {
 
 	public static List<Integer> straight(List<Card> hand) {
 		
-	
-	//	int firstCardSuit = playerHand.get(0).getSuit();
-		List<Integer> sortedCardRanks = new ArrayList<>();
-		List<Integer> cardSuits = new ArrayList<>();
-		List<Integer> positionList = new ArrayList<>();
-		int count = 0;
-	
-		//Create an Integer list containing all the player's ranks
-		for(Card card : hand){
-			sortedCardRanks.add(card.getRank().getValue());
-			cardSuits.add(card.getSuit().getValue());
-		}
-	
-		//Sort the ranks
-		Collections.sort(sortedCardRanks);
-	
-		//Check to see that all card suits are not identical
-		Set<Integer> suitSet = new HashSet<>(cardSuits);
-	
-		//If set size is smaller, there are duplicates, meaning more than one suit, which a Straight requires
-		if(suitSet.size() > cardSuits.size())
-			return null;
-	
-		//Go Step by step to see if the next card's rank is only 1 more than it
-		for(int i = 0; i < 4; i++){
-			
-			if(!(sortedCardRanks.get(i) == (sortedCardRanks.get(i+1) - 1)))
-				count++;
-		}
-		
-		if(count==5) {
-			for(int i=0;i<5;i++) {
-				positionList.add(i);
+		if(isStraight(hand)) {
+			List<Integer> positionList = new ArrayList<>();
+			for (int i = 0; i<hand.size(); i++) {
+				positionList.add(i+1);
 			}
-		}
+			return positionList;
+		}else
 			return null;
 		
 	}
@@ -235,7 +207,22 @@ public class Utils {
 			return null;
 	}
 
-	public static List<Integer> fourOfAKind(String type,List<Card> hand){
+	public static List<Integer> fourOfAKind(String type, List<Card> hand){
+		if(isFourOfAKind(type, hand)) {
+			int f = 0;
+			List<Integer> positionList = new ArrayList<>();
+			for(int i = 0; i<hand.size()-1; i++) {
+				if(hand.get(i).getRank() == hand.get(i+1).getRank())
+					f = hand.get(i).getRank().getInt();
+			}
+			for(int i = 0; i<hand.size(); i++) {
+				if(hand.get(i).getRank().getInt()==f) {
+					positionList.add(i+1);
+				}
+			}
+			return positionList;
+		}
+		
 		return null;
 	}
 	
@@ -356,7 +343,7 @@ public class Utils {
 		Integer[] seen = new Integer[] {0,0,0,0,0,0,0,0,0,0,0,0,0};
 		for( int i = 0; i<hand.size(); i++ ) {
 			if(hand.get(i).getRank()!=Rank.ACE)
-				seen[hand.get(i).getRank().getInt()]++;
+				seen[hand.get(i).getRank().getInt()-2]++;
 		}
 		for(int i = 0; i<seen.length; i++) {
 			if(seen[i] == 2) {
@@ -926,7 +913,7 @@ public class Utils {
 		}
 		//Check 3 HighCards
 		for(int i = 0; i<positionList.size(); i++) {
-			if(hand.get(positionList.get(i)).getRank().getInt() > 10 || hand.get(positionList.get(i)).getRank().getInt() == 1) {
+			if(hand.get(positionList.get(i)-1).getRank().getInt() > 10 || hand.get(positionList.get(i)-1).getRank().getInt() == 1) {
 				highCard++;
 			}
 		}
@@ -970,7 +957,7 @@ public class Utils {
 		}
 		//Check 2 HighCards
 		for(int i = 0; i<positionList.size(); i++) {
-			if(hand.get(positionList.get(i)).getRank().getInt() > 10 || hand.get(positionList.get(i)).getRank().getInt() == 1) {
+			if(hand.get(positionList.get(i)-1).getRank().getInt() > 10 || hand.get(positionList.get(i)-1).getRank().getInt() == 1) {
 				highCard++;
 			}
 		}
@@ -1014,7 +1001,7 @@ public class Utils {
 		}
 		//Check 1 HighCard
 		for(int i = 0; i<positionList.size(); i++) {
-			if(hand.get(positionList.get(i)).getRank().getInt() > 10 || hand.get(positionList.get(i)).getRank().getInt() == 1) {
+			if(hand.get(positionList.get(i)-1).getRank().getInt() > 10 || hand.get(positionList.get(i)-1).getRank().getInt() == 1) {
 				highCard++;
 			}
 		}
@@ -1169,16 +1156,6 @@ public static List<Integer> fourToRoyalFlush(List<Card> hand){
 }
 
 public static List<Integer> threeToAStraightFlush(int i, List<Card> hand) {
-	// TODO Auto-generated method stub
-	return null;
-}
-
-public static List<Integer> fourToAnInsideStraight(int i, List<Card> hand) {
-	// TODO Auto-generated method stub
-	return null;
-}
-
-public static List<Integer> twoSuitedHighCards(List<Card> hand) {
 	// TODO Auto-generated method stub
 	return null;
 }

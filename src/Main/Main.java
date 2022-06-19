@@ -12,6 +12,7 @@ public class Main {
 	public static Integer credit;
 	public static Integer baseCredit;
 	public static Integer[] multiplier = new Integer[] {250, 50, 160, 80, 50, 10, 7, 5, 3, 1, 1, 0};
+	public static Boolean doPrint = true;
 	
 	public static void main(String[] args) {
 		try {
