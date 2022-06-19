@@ -87,16 +87,16 @@ public enum DificultHand {
 		
 	},
 	
-	STRAIGHT {
+	FULL_HOUSE {
 		
 		@Override
 		public
 		List<Integer> matches(List<Card> hand) {
-			
-			return Utils.straight(hand);
-		}
 
+		 return Utils.fullHouse(hand);
+		}
 	},
+	
 	
 	FLUSH {
 		
@@ -108,17 +108,16 @@ public enum DificultHand {
 		}
 	},
 	
-	
-
-		FULL_HOUSE {
+	STRAIGHT {
 		
-			@Override
-			public
-			List<Integer> matches(List<Card> hand) {
+		@Override
+		public
+		List<Integer> matches(List<Card> hand) {
+			
+			return Utils.straight(hand);
+		}
 
-			 return Utils.fullHouse(hand);
-			}
-		},
+	},
 
 
 		THREE_OF_A_KIND {
