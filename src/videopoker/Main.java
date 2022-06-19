@@ -1,4 +1,4 @@
-package Main;
+package videopoker;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 

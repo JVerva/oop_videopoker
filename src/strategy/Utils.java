@@ -535,15 +535,17 @@ public class Utils {
 		}
 		//check type 1
 		for(int i = 0; i<positionList.size(); i++) {
-			if(hand.get(positionList.get(i)).getRank().getInt() > 10) {
+			if(hand.get(positionList.get(i)-1).getRank().getInt() > 10) {
 				HighCard++;
 			}
-			if(hand.get(positionList.get(i)).getRank().getInt() == 1) {
+			if(hand.get(positionList.get(i)-1).getRank().getInt() == 1) {
 				return null;
 			}
 		}
-		if(hand.get(positionList.get(1)).getRank().getInt() == 2 && hand.get(positionList.get(2)).getRank().getInt() == 3 && hand.get(positionList.get(3)).getRank().getInt() == 4 ) {
-			return null;
+		if(positionList.size()>2) {
+			if(hand.get(positionList.get(0)-1).getRank().getInt() == 2 && hand.get(positionList.get(1)-1).getRank().getInt() == 3 && hand.get(positionList.get(2)-1).getRank().getInt() == 4 ) {
+				return null;
+			}
 		}
 		
 		if(count == 3 && HighCard == 2) {
@@ -596,17 +598,18 @@ public class Utils {
 		}
 		//check type 2
 		for(int i = 0; i<positionList.size(); i++) {
-			if(hand.get(positionList.get(i)).getRank().getInt() > 10) {
+			if(hand.get(positionList.get(i)-1).getRank().getInt() > 10) {
 				HighCard++;
 			}
-			if(hand.get(positionList.get(i)).getRank().getInt() == 1) {
+			if(hand.get(positionList.get(i)-1).getRank().getInt() == 1) {
 				HighCard++;
 			}
 		}
-		if(hand.get(positionList.get(1)).getRank().getInt() == 2 && hand.get(positionList.get(2)).getRank().getInt() == 3 && hand.get(positionList.get(3)).getRank().getInt() == 4 ) {
-			sequence = 1;
+		if(positionList.size()>2) {
+			if(hand.get(positionList.get(0)-1).getRank().getInt() == 2 && hand.get(positionList.get(1)-1).getRank().getInt() == 3 && hand.get(positionList.get(2)-1).getRank().getInt() == 4 ) {
+				sequence = 1;
+			}
 		}
-		
 		if(count == 3 && (HighCard == 1 || sequence == 1)) {
 			return positionList;
 		}else {
@@ -655,10 +658,10 @@ public class Utils {
 		}
 		//check type 3
 		for(int i = 0; i<positionList.size(); i++) {
-			if(hand.get(positionList.get(i)).getRank().getInt() > 10) {
+			if(hand.get(positionList.get(i)-1).getRank().getInt() > 10) {
 				HighCard++;
 			}
-			if(hand.get(positionList.get(i)).getRank().getInt() == 1) {
+			if(hand.get(positionList.get(i)-1).getRank().getInt() == 1) {
 				HighCard++;
 			}
 		}
@@ -1060,7 +1063,6 @@ public class Utils {
 		}
 		
 	}
-
 	
 	private static List<Integer> getUnsuited(List<Integer> cardList, List<Card> hand) {
 		
@@ -1131,43 +1133,5 @@ public class Utils {
 			
 		}
 	};
-
-
-public static List<Integer> fourToRoyalFlush(List<Card> hand){
-	
-	List<Integer> list = Arrays.asList(1,10,11,12,13);
-	
-	List<Integer> positionList = new ArrayList<>();
-	
-	int suit = 0;
-	
-	int position=0;
-	
-	
-	for(Card card : hand){
-			
-		if(list.contains(card.getRank().getValue())) {
-			if(suit==0) {
-				suit=card.getSuit().getValue();
-				positionList.add(position);
-			} else if(card.getSuit().getValue()==suit) {
-				positionList.add(position);
-			}
-				position++;
-			}
-		
-	}
-	
-	if(positionList.size()==4) {	
-		return positionList;
-	}
-	
-	return null;
-}
-
-public static List<Integer> threeToAStraightFlush(int i, List<Card> hand) {
-	// TODO Auto-generated method stub
-	return null;
-}
 
 }

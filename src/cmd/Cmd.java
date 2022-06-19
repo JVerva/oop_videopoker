@@ -4,14 +4,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
-import Main.Main;
 import card.Card;
 import deck.Deck;
 import deck.Hand;
 import gamemode.GameModeAlias;
 import strategy.DificultHand;
 import strategy.PokerHand;
+import videopoker.Main;
 
 public class Cmd {
 	

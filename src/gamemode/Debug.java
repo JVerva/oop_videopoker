@@ -5,10 +5,10 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import Main.Main;
 import cmd.Cmd;
 import cmd.CmdAlias;
 import deck.Deck;
+import videopoker.Main;
 
 public class Debug {
 	

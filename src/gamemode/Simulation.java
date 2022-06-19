@@ -5,11 +5,12 @@ import java.util.List;
 
 import cmd.Cmd;
 import deck.Deck;
+import videopoker.Main;
 
 public class Simulation {
 
 	public static void play(String sbet, String snbets) throws IOException {
-		Main.Main.doPrint = false;
+		Main.doPrint = false;
 		Integer bet = Integer.parseInt(sbet);
 		Integer nbets = Integer.parseInt(snbets);
 		Deck.build();
