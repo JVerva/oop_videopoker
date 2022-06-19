@@ -28,7 +28,7 @@ public enum Suit {
 	}
 	
 	public static Suit get(int i) throws IllegalArgumentException{
-		switch(1) {
+		switch(i) {
 		case 0:
 			return Suit.DIAMONDS;
 		case 1:
@@ -40,6 +40,20 @@ public enum Suit {
 		default :
 			throw new IllegalArgumentException(1 + " does not correspond to a suit");
 		}
+	}
+	
+	public Character getChar(){
+		switch(this) {
+		case DIAMONDS:
+			return 'D';
+		case HEARTS:
+			return 'H';
+		case CLUBS:
+			return 'C';
+		case SPADES:
+			return 'S';
+		}
+		return 0;
 	}
 	
 	public int getValue() {
