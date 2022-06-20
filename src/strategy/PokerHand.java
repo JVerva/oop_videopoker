@@ -3,7 +3,9 @@ package strategy;
 import java.util.List;
 
 import card.Card;
-
+/**
+ *  Poker Hands Combinations Double bonus 10/7
+ */
 public enum PokerHand {
 
 
@@ -94,7 +96,6 @@ public enum PokerHand {
 		@Override
 		public
 		boolean matches(List<Card> hand) {
-			// TODO Auto-generated method stub
 			return Utils.isThreeOfAKind(hand);
 		}
 	},
@@ -104,7 +105,6 @@ public enum PokerHand {
 		@Override
 		public
 		boolean matches(List<Card> hand) {
-			// TODO Auto-generated method stub
 			return Utils.isTwoPair(hand);
 		}
 
@@ -116,7 +116,6 @@ public enum PokerHand {
 		@Override
 		public
 		boolean matches(List<Card> hand) {
-			// TODO Auto-generated method stub
 			return Utils.isJacksOrBetter(hand);
 			}
 
@@ -127,7 +126,6 @@ public enum PokerHand {
 			
 			@Override
 			public boolean matches(List<Card> hand) {
-				// TODO Auto-generated method stub
 				return true;
 			}
 		};

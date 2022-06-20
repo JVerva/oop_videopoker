@@ -4,6 +4,9 @@ import java.util.List;
 
 import card.Card;
 
+/**
+ *  Poker plus Dificult Hands Combinations Double bonus 10/7
+ */
 public enum DificultHand {
 	
 

@@ -13,8 +13,22 @@ import card.Card;
 import card.Rank;
 import card.RankSort;
 
+/**
+* <h1>Implements the checks and lists to hold for strategy</h1>
+*
+* @author  Group 43
+* @version 1.0
+* @since   2022-06-20
+*/
 public class Utils {
 	
+	/**
+	 * <p>Checks if hand is a FourOfAKind
+	 * </p>
+	 * @param type represents the three types of four of a kind
+	 * @param hand the hand list
+	 * @return true if the hand is has four of a kind 
+	 */
 	public static boolean isFourOfAKind(String type, List<Card> hand) {
 		
 		HashMap<Integer,Integer> rankMap = new HashMap<>();
@@ -46,6 +60,12 @@ public class Utils {
 		
 	}
 	
+	/**
+	 * <p>Checks if hand is a Full House
+	 * </p>
+	 * @param hand the hand list
+	 * @return true if the hand is a full house
+	 */
 	public static boolean isFullHouse(List<Card> hand) {
 		HashMap<Integer,Integer> map = new HashMap<>();
 	
@@ -62,6 +82,12 @@ public class Utils {
 		return map.containsValue(3) && map.containsValue(2);
 	}
 
+	/**
+	 * <p>Checks if hand is a Straight
+	 * </p>
+	 * @param hand the hand list
+	 * @return true if the hand is a Straight
+	 */
 	public static boolean isStraight(List<Card> hand) {
 		
 	
@@ -94,6 +120,13 @@ public class Utils {
 		return true;
 	}
 
+	
+	/**
+	 * <p>Obtains the list of positions to hold of the sorted hand if is a Straight 
+	 * </p>
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	public static List<Integer> straight(List<Card> hand) {
 		
 		if(isStraight(hand)) {
@@ -107,7 +140,13 @@ public class Utils {
 		
 	}
 		
-
+	/**
+	 * <p>Checks if hand is a Flush
+	 * </p>
+	 * @param type The type of flush
+	 * @param hand the hand list
+	 * @return true if the hand is a Straight
+	 */
 	public static boolean isFlush(String type, List<Card> hand) {
 		
 		List<Integer> list = new ArrayList<>();
@@ -143,6 +182,12 @@ public class Utils {
 		return false;
 	}
 
+	/**
+	 * <p>Checks if hand is a ThreeOfAKind 
+	 * </p>
+	 * @param hand The hand list
+	 * @return true if the hand is ThreeOfAKind 
+	 */
 	public static boolean isThreeOfAKind(List<Card> hand){
 		HashMap<Integer,Integer> rankMap = new HashMap<>();
 		for(Card card : hand){
@@ -158,6 +203,13 @@ public class Utils {
 		return rankMap.containsValue(3);
 	}
 
+	
+	/**
+	 * <p>Checks if hand is TwoPair 
+	 * </p>
+	 * @param hand The hand list
+	 * @return  true if the hand is TwoPair
+	 */
 	public static boolean isTwoPair(List<Card> hand){
 		HashMap<Integer,Integer> rankMap = new HashMap<>();
 		int pairCounter = 0;
@@ -176,6 +228,12 @@ public class Utils {
 		return pairCounter == 2 && rankMap.containsValue(1);
 	}
 
+	/**
+	 * <p>Checks if hand is JacksOrBetter 
+	 * </p>
+	 * @param hand The hand list
+	 * @return  true if the hand is JacksOrBetter
+	 */
 	public static boolean isJacksOrBetter(List<Card> hand){
 		HashMap<Integer,Integer> rankMap = new HashMap<>();
 		int pairCounter = 0;
@@ -195,7 +253,12 @@ public class Utils {
 		return pairCounter == 1 && rankMap.containsValue(1);
 	}
 
-	
+	/**
+	 * <p>Obtains the list of positions to hold of the sorted hand if is a Straight Flush 
+	 * </p>
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	public static List<Integer> straightFlush(List<Card> hand){
 		if(Utils.isFlush("FLUSH", hand)) {
 			List<Integer> positionList = new ArrayList<>();
@@ -207,6 +270,12 @@ public class Utils {
 			return null;
 	}
 
+	/**
+	 * <p>Obtains the list of positions to hold of the sorted hand if is a FourOfAKind
+	 * </p>
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	public static List<Integer> fourOfAKind(String type, List<Card> hand){
 		if(isFourOfAKind(type, hand)) {
 			int f = 0;
@@ -226,6 +295,12 @@ public class Utils {
 		return null;
 	}
 	
+	/**
+	 * <p>Obtains the list of positions to hold of the sorted hand if is a RoyalFlush
+	 * </p>
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	public static List<Integer> royalFlush(List<Card> hand){
 		if(Utils.isFlush("ROYAL_FLUSH", hand)) {
 			List<Integer> positionList = new ArrayList<>();
@@ -237,6 +312,12 @@ public class Utils {
 			return null;
 	}
 
+	/**
+	 * <p>Obtains the list of positions to hold of the sorted hand if is ThreeAces
+	 * </p>
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	public static List<Integer> threeAces(List<Card> hand){
 		
 		int count=0;
@@ -254,6 +335,12 @@ public class Utils {
 			return null;
 	}
 	
+	/**
+	 * <p>Obtains the list of positions to hold of the sorted hand if is Flush
+	 * </p>
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	public static List<Integer> flush(String type,List<Card> hand){
 		if(Utils.isFlush(type,hand)) {
 			List<Integer> positionList = new ArrayList<>();
@@ -266,6 +353,12 @@ public class Utils {
 		}
 	}
 	
+	/**
+	 * <p>Obtains the list of positions to hold of the sorted hand if is a FullHouse
+	 * </p>
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	public static List<Integer> fullHouse(List<Card> hand){
 		if(Utils.isFullHouse(hand)) {
 			List<Integer> positionList = new ArrayList<>();
@@ -277,6 +370,12 @@ public class Utils {
 			return null;
 	}
 
+	/**
+	 * <p>Obtains the list of positions to hold of the sorted hand if is a ThreeOfAKindEA
+	 * </p>
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	public static List<Integer> threeOfAKindEA(List<Card> hand){
 		int s;
 		Integer[] seen = new Integer[] {0,0,0,0,0,0,0,0,0,0,0,0};
@@ -299,6 +398,12 @@ public class Utils {
 		return null;
 	}
 	
+	/**
+	 * <p>Obtains the list of positions to hold of the sorted hand if is a FourToStraightFlush
+	 * </p>
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	public static List<Integer> fourToStraightFlush(List<Card> hand){
 		
 		List<Card> sortedHand = hand;
@@ -342,6 +447,12 @@ public class Utils {
 		
 	}
 
+	/**
+	 * <p>Obtains the list of positions to hold of the sorted hand if is TwoPair
+	 * </p>
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	public static List<Integer> twoPair(List<Card> hand){
 		int s1=0;
 		int s2=0;
@@ -375,6 +486,12 @@ public class Utils {
 		return null;
 	}
 	
+	/**
+	 * <p>Obtains the list of positions to hold of the sorted hand if is HighPair
+	 * </p>
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	public static List<Integer> highPair(List<Card> hand){
 		int s=0;
 		Integer[] seen = new Integer[] {0,0,0,0};
@@ -415,7 +532,12 @@ public class Utils {
 		}
 		return null;
 	}
-	
+	/**
+	 * <p>Obtains the list of positions to hold of the sorted hand if is FourToAFlush
+	 * </p>
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	public static List<Integer> fourToAFlush(List<Card> hand){
 		int s;
 		Integer[] seen = new Integer[] {0,0,0,0};
@@ -437,6 +559,12 @@ public class Utils {
 		return null;
 	}
 	
+	/**
+	 * <p>Obtains the list of positions to hold of the sorted hand if is ThreeToRoyalFlush
+	 * </p>
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	public static List<Integer> threeToRoyalFlush(List<Card> hand){
 	
 		List<Integer> list = Arrays.asList(1,10,11,12,13);
@@ -467,6 +595,12 @@ public class Utils {
 		return positionList;
 	}
 	
+	/**
+	 * <p>Obtains the list of positions to hold of the sorted hand if is LowPair
+	 * </p>
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	public static List<Integer> lowPair(List<Card> hand){
 		int s=0;
 		Integer[] seen = new Integer[] {0,0,0,0,0,0,0,0,0};
@@ -491,6 +625,12 @@ public class Utils {
 		return null;
 	}
 
+	/**
+	 * <p>Obtains the list of positions to hold of the sorted hand if is AKQJUnsuited
+	 * </p>
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	public static List<Integer> AKQJUnsuited(List<Card> hand){
 		
 		List<Integer> list = new ArrayList<>();
@@ -498,6 +638,12 @@ public class Utils {
 		return Utils.getUnsuited(list, hand);
 	}
 	
+	/**
+	 * <p>Obtains the list of positions to hold of the sorted hand if is ThreeToStraightFlushType1
+	 * </p>
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	public static List<Integer> threeToStraightFlushType1(List<Card> hand){
 		
 		List<Card> sortedHand = hand;
@@ -568,6 +714,12 @@ public class Utils {
 		
 	}
 	
+	/**
+	 * <p>Obtains the list of positions to hold of the sorted hand if is ThreeToStraightFlushType2
+	 * </p>
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	public static List<Integer> threeToStraightFlushType2(List<Card> hand){
 		
 		List<Card> sortedHand = hand;
@@ -638,6 +790,12 @@ public class Utils {
 		
 	}
 	
+	/**
+	 * <p>Obtains the list of positions to hold of the sorted hand if is ThreeToStraightFlushType3
+	 * </p>
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	public static List<Integer> threeToStraightFlushType3(List<Card> hand){
 		
 		List<Card> sortedHand = hand;
@@ -702,6 +860,12 @@ public class Utils {
 		
 	}
 	
+	/**
+	 * <p>Obtains the list of positions to hold of the sorted hand if is ThreeToAFlushWith2HighCards
+	 * </p>
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	public static List<Integer> threeToAFlushWith2HighCards(List<Card> hand){
 		
 		int s;
@@ -731,6 +895,12 @@ public class Utils {
 		return null;
 	}
 	
+	/**
+	 * <p>Obtains the list of positions to hold of the sorted hand if is ThreeToAFlushWith1HighCards
+	 * </p>
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	public static List<Integer> threeToAFlushWith1HighCard(List<Card> hand){
 		
 		int s;
@@ -760,6 +930,12 @@ public class Utils {
 		return null;
 	}
 	
+	/**
+	 * <p>Obtains the list of positions to hold of the sorted hand if is ThreeToAFlushWith0HighCards
+	 * </p>
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	public static List<Integer> threeToAFlushWith0HighCard(List<Card> hand){
 		
 		int s;
@@ -789,6 +965,12 @@ public class Utils {
 		return null;
 	}
 	
+	/**
+	 * <p>Obtains the list of positions to hold of the sorted hand if is TwoSuitedHighCards
+	 * </p>
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	public static List<Integer> twoSuitedHighCards(List<Card> hand){
 		
 		int s;
@@ -816,6 +998,12 @@ public class Utils {
 		return null;
 	}
 	
+	/**
+	 * <p>Obtains the list of positions to hold of the sorted hand if is KQJUnsuited
+	 * </p>
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	public static List<Integer> KQJUnsuited(List<Card> hand){
 		
 		List<Integer> list = new ArrayList<>();
@@ -823,6 +1011,12 @@ public class Utils {
 		return Utils.getUnsuited(list, hand);
 	}
 	
+	/**
+	 * <p>Obtains the list of positions to hold of the sorted hand if is QJUnsuited
+	 * </p>
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	public static List<Integer> QJUnsuited(List<Card> hand){
 		
 		List<Integer> list = new ArrayList<>();
@@ -830,13 +1024,25 @@ public class Utils {
 		return Utils.getUnsuited(list, hand);
 	}
 	
+	/**
+	 * <p>Obtains the list of positions to hold of the sorted hand if is KQUnsuited
+	 * </p>
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	public static List<Integer> KQUnsuited(List<Card> hand){
 		
 		List<Integer> list = new ArrayList<>();
 		list = Arrays.asList(13,12);
 		return Utils.getUnsuited(list, hand);
 	}
-	
+
+	/**
+	 * <p>Obtains the list of positions to hold of the sorted hand if is KJUnsuited
+	 * </p>
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	public static List<Integer> KJUnsuited(List<Card> hand){
 		
 		List<Integer> list = new ArrayList<>();
@@ -844,6 +1050,12 @@ public class Utils {
 		return Utils.getUnsuited(list, hand);
 	}
 
+	/**
+	 * <p>Obtains the list of positions to hold of the sorted hand if is QJSuited
+	 * </p>
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	public static List<Integer> QJSuited(List<Card> hand){
 		
 		List<Integer> list = new ArrayList<>();
@@ -851,6 +1063,12 @@ public class Utils {
 		return Utils.getSuited(list, hand);
 	}
 	
+	/**
+	 * <p>Obtains the list of positions to hold of the sorted hand if is JTSuited
+	 * </p>
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	public static List<Integer> JTSuited(List<Card> hand){
 			
 		List<Integer> list = new ArrayList<>();
@@ -859,6 +1077,12 @@ public class Utils {
 		
 	}
 	
+	/**
+	 * <p>Obtains the list of positions to hold of the sorted hand if is QTSuited
+	 * </p>
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	public static List<Integer> QTSuited(List<Card> hand){
 		
 		List<Integer> list = new ArrayList<>();
@@ -867,6 +1091,12 @@ public class Utils {
 		
 	}
 	
+	/**
+	 * <p>Obtains the list of positions to hold of the sorted hand if is KTSuited
+	 * </p>
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	public static List<Integer> KTSuited(List<Card> hand){
 		
 		List<Integer> list = new ArrayList<>();
@@ -874,23 +1104,53 @@ public class Utils {
 		return Utils.getSuited(list, hand);
 		
 	}
-		
+	
+	/**
+	 * <p>Obtains the list of positions to hold of the sorted hand if is Ace
+	 * </p>
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	public static List<Integer> ace(List<Card> hand){
 		return getCard(1, hand);
 	}
 	
+	/**
+	 * <p>Obtains the list of positions to hold of the sorted hand if is Jack
+	 * </p>
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	public static List<Integer> jack(List<Card> hand){
 		return getCard(11, hand);
 	}
 
+	/**
+	 * <p>Obtains the list of positions to hold of the sorted hand if is Queen
+	 * </p>
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	public static List<Integer> queen(List<Card> hand){
 		return getCard(12, hand);
 	}
 	
+	/**
+	 * <p>Obtains the list of positions to hold of the sorted hand if is King
+	 * </p>
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	public static List<Integer> king(List<Card> hand){
 		return getCard(13, hand);
 	}
 	
+	/**
+	 * <p>Obtains the list of positions to hold of the sorted hand if is FourToOutsideStraight
+	 * </p>
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	public static List<Integer> fourToOutsideStraight(List<Card> hand){
 		
 		Boolean s = false;
@@ -919,6 +1179,12 @@ public class Utils {
 		return null;
 	}
 	
+	/**
+	 * <p>Obtains the list of positions to hold of the sorted hand if is FourToInsideStraightWith3HighCards
+	 * </p>
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	public static List<Integer> fourToInsideStraightWith3HighCards(List<Card> hand){
 			
 		List<Card> sortedHand = hand;
@@ -968,6 +1234,12 @@ public class Utils {
 		
 	}
 	
+	/**
+	 * <p>Obtains the list of positions to hold of the sorted hand if is FourToInsideStraightWith2HighCards
+	 * </p>
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	public static List<Integer> fourToInsideStraightWith2HighCards(List<Card> hand){
 		
 		List<Card> sortedHand = hand;
@@ -1017,6 +1289,12 @@ public class Utils {
 		
 	}
 	
+	/**
+	 * <p>Obtains the list of positions to hold of the sorted hand if is FourToInsideStraightWith1HighCards
+	 * </p>
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	public static List<Integer> fourToInsideStraightWith1HighCard(List<Card> hand){
 		
 		List<Card> sortedHand = hand;
@@ -1066,6 +1344,12 @@ public class Utils {
 		
 	}
 
+	/**
+	 * <p>Obtains the list of positions to hold of the sorted hand if is FourToInsideStraightWith0HighCards
+	 * </p>
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	public static List<Integer> fourToInsideStraightWith0HighCard(List<Card> hand){
 		
 		List<Card> sortedHand = hand;
@@ -1108,6 +1392,12 @@ public class Utils {
 		
 	}
 	
+	/**
+	 * <p>Obtains the list of positions to hold of the Unsuited
+	 * </p>
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	private static List<Integer> getUnsuited(List<Integer> cardList, List<Card> hand) {
 		
 		List<Integer> positionList = new ArrayList<>();
@@ -1127,6 +1417,13 @@ public class Utils {
 		
 	}
 	
+	/**
+	 * <p>Obtains the list of positions to hold of the Suited
+	 * </p>
+	 * @param cardList the hand list
+	 * @param hand the hand list
+	 * @return The list of positions to hold
+	 */
 	private static List<Integer> getSuited(List<Integer> cardList, List<Card> hand) {
 		
 		List<Integer> positionList = new ArrayList<>();
@@ -1144,6 +1441,13 @@ public class Utils {
 		
 	}
 	
+	/**
+	 * <p>Obtains the list of positions of the card in the hand
+	 * </p>
+	 * @param cardn The card to find
+	 * @param hand The hand list
+	 * @return The list of positions to hold
+	 */
 	private static List<Integer> getCard(int cardn, List<Card> hand){
 		for(int i=0; i<hand.size(); i++) {
 			if(hand.get(i).getRank().getInt()==cardn) {
@@ -1155,6 +1459,13 @@ public class Utils {
 		return null;
 	}
 	
+	/**
+	 * <p>Obtains the position of the card in the hand
+	 * </p>
+	 * @param hand The hand list
+	 * @param cardn The card to find
+	 * @return The list of positions to hold
+	 */
 	private static Integer getPos(List<Card> hand, Card card) {
 		for(int i = 0; i<hand.size(); i++) {
 			if(hand.get(i)==card)
