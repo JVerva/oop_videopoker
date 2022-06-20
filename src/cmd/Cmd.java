@@ -216,7 +216,7 @@ public class Cmd {
 		System.out.println("--------------------------");
 		System.out.println("Total		" + stats[stats.length-1].toString());
 		System.out.println("--------------------------");
-		System.out.println("Credit		" + Main.credit.toString() + " " + Double.valueOf(Main.sumofgain)/Double.valueOf(Main.sumofbets)*100);
+		System.out.println("Credit		" + Main.credit.toString() + " " + Double.valueOf(Main.sumofgain)/Double.valueOf(Main.sumofbets)*100 + "%");
 	}
 	
 	public static void printScore(PokerHand score) {

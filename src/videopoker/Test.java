@@ -8,9 +8,9 @@ import java.util.List;
 
 import card.Card;
 import card.Rank;
+import card.RankSort;
 import card.Suit;
 import strategy.PokerHand;
-import strategy.RankSort;
 
 public class Test {
 	

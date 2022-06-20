@@ -2,7 +2,6 @@ package strategy;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -12,6 +11,7 @@ import java.util.Map.Entry;
 
 import card.Card;
 import card.Rank;
+import card.RankSort;
 
 public class Utils {
 	
@@ -303,7 +303,7 @@ public class Utils {
 		
 		List<Card> sortedHand = hand;
 		List<Integer> positionList = new ArrayList<>();
-		sortedHand.sort(comparator);
+		sortedHand.sort(new RankSort());
 		
 		Boolean s = false;
 		int count=0;
@@ -502,7 +502,7 @@ public class Utils {
 		
 		List<Card> sortedHand = hand;
 		List<Integer> positionList = new ArrayList<>();
-		sortedHand.sort(comparator);
+		sortedHand.sort(new RankSort());
 		Boolean s = false;
 		int count=0;
 		int holes = 0;
@@ -572,7 +572,7 @@ public class Utils {
 		
 		List<Card> sortedHand = hand;
 		List<Integer> positionList = new ArrayList<>();
-		sortedHand.sort(comparator);
+		sortedHand.sort(new RankSort());
 		Boolean s = false;
 		int count=0;
 		int holes = 0;
@@ -642,7 +642,7 @@ public class Utils {
 		
 		List<Card> sortedHand = hand;
 		List<Integer> positionList = new ArrayList<>();
-		sortedHand.sort(comparator);
+		sortedHand.sort(new RankSort());
 		Boolean s = false;
 		int count=0;
 		int holes = 0;
@@ -897,7 +897,7 @@ public class Utils {
 		int count=0;
 		List<Card> sortedHand = hand;
 		List<Integer> positionList = new ArrayList<>();
-		sortedHand.sort(comparator);
+		sortedHand.sort(new RankSort());
 		
 		for(int i = 0; i<sortedHand.size()-1; i++){
 			if(sortedHand.get(i).getRank()!= Rank.ACE && sortedHand.get(i+1).getRank() != Rank.ACE && (sortedHand.get(i).getRank().getInt()+1 == sortedHand.get(i+1).getRank().getInt())) {
@@ -923,7 +923,7 @@ public class Utils {
 			
 		List<Card> sortedHand = hand;
 		List<Integer> positionList = new ArrayList<>();
-		sortedHand.sort(comparator);
+		sortedHand.sort(new RankSort());
 		Boolean s = false;
 		int count=0;
 		int holes = 0;
@@ -972,7 +972,7 @@ public class Utils {
 		
 		List<Card> sortedHand = hand;
 		List<Integer> positionList = new ArrayList<>();
-		sortedHand.sort(comparator);
+		sortedHand.sort(new RankSort());
 		Boolean s = false;
 		int count=0;
 		int holes = 0;
@@ -1021,7 +1021,7 @@ public class Utils {
 		
 		List<Card> sortedHand = hand;
 		List<Integer> positionList = new ArrayList<>();
-		sortedHand.sort(comparator);
+		sortedHand.sort(new RankSort());
 		Boolean s = false;
 		int count=0;
 		int holes = 0;
@@ -1070,7 +1070,7 @@ public class Utils {
 		
 		List<Card> sortedHand = hand;
 		List<Integer> positionList = new ArrayList<>();
-		sortedHand.sort(comparator);
+		sortedHand.sort(new RankSort());
 		Boolean s = false;
 		int count=0;
 		int holes = 0;
@@ -1162,19 +1162,5 @@ public class Utils {
 		}
 		return null;
 	}
-
-	static Comparator<Card> comparator = new Comparator<Card>(){
-	
-		@Override
-		public int compare(Card o1, Card o2) {
-			
-			if(o1.getRank() == o2.getRank())
-				return 0;
-			else if(o1.getRank().getInt()>o2.getRank().getInt())
-				return 1;
-			else
-				return -1;
-		}
-	};
 
 }
