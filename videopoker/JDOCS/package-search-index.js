@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"card"},{"l":"cmd"},{"l":"deck"},{"l":"gamemode"},{"l":"strategy"},{"l":"videopoker"}];updateSearchResults();

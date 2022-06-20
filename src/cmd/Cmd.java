@@ -18,6 +18,14 @@ public class Cmd {
 	
 	private static CmdAlias[] blockedCmds =  new CmdAlias[] {CmdAlias.ADVICE, CmdAlias.HOLD, CmdAlias.DEAL};
 	
+	
+	/**
+	 * executes a command with the given parameters
+	 * @param cmd
+	 * @param params
+	 * @throws IllegalArgumentException
+	 * @throws IndexOutOfBoundsException
+	 */
 	public static void execute(CmdAlias cmd, ArrayList<Integer> params) throws IllegalArgumentException, IndexOutOfBoundsException {
 		
 		for(int i = 0; i<blockedCmds.length; i++) {
@@ -40,7 +48,11 @@ public class Cmd {
 		}
 	
 	}
-	
+	/**
+	 * execute a command without the parameters
+	 * @param cmd
+	 * @throws IllegalArgumentException
+	 */
 	public static void execute(CmdAlias cmd) throws IllegalArgumentException {
 		
 		for(int i = 0; i<blockedCmds.length; i++) {
@@ -72,7 +84,10 @@ public class Cmd {
 				throw new IllegalArgumentException(String.valueOf(cmd.getAlias()) + " has to recieve arguments.");
 		}
 	}
-	
+	/**
+	 * set hand betting amount
+	 * @param amount
+	 */
 	public static void bet(Integer amount) {
 		if(amount > 0 && amount < 6) {
 			Hand.setBet(amount);
@@ -88,11 +103,16 @@ public class Cmd {
 			 Cmd.blockedCmds[Cmd.blockedCmds.length - 1] = CmdAlias.BET; 
 		}
 	}
-	
+	/**
+	 * displays player's credit
+	 */
 	public static void credit() {
 		System.out.println("player's credit is " + Main.credit);
 	}
-	
+	/**
+	 * deal a hand from the deck
+	 * @throws IndexOutOfBoundsException
+	 */
 	public static void deal() throws IndexOutOfBoundsException{
 		if(Main.gameMode == GameModeAlias.SIMULATION) {
 			Deck.shuffle();
@@ -110,7 +130,11 @@ public class Cmd {
 		}
 		Cmd.blockedCmds = new CmdAlias[] {CmdAlias.BET, CmdAlias.DEAL};
 	}
-	
+	/**
+	 * hold the given positions and deals new cards
+	 * @param pos
+	 * @throws IllegalArgumentException
+	 */
 	public static void hold(List<Integer> pos) throws IllegalArgumentException{
 		Cmd.blockedCmds = new CmdAlias[] {CmdAlias.ADVICE, CmdAlias.HOLD, CmdAlias.DEAL};
 		
@@ -155,7 +179,10 @@ public class Cmd {
 		}
 		Hand.clear();
 	}
-	
+	/**
+	 * discards all cards from the hand and gives a new one
+	 * @throws IllegalArgumentException
+	 */
 	public static void hold() throws IllegalArgumentException{
 		Cmd.blockedCmds = new CmdAlias[] {CmdAlias.ADVICE, CmdAlias.HOLD, CmdAlias.DEAL};
 		
@@ -206,7 +233,9 @@ public class Cmd {
 		 }
 		return positionList;
 	}
-	
+	/**
+	 * print the statistics table
+	 */
 	public static void statistics() {
 		System.out.println("Hand			Nb");
 		System.out.println("--------------------------");
@@ -218,7 +247,10 @@ public class Cmd {
 		System.out.println("--------------------------");
 		System.out.println("Credit		" + Main.credit.toString() + " " + Double.valueOf(Main.sumofgain)/Double.valueOf(Main.sumofbets)*100 + "%");
 	}
-	
+	/**
+	 * prints the returned hand score
+	 * @param score
+	 */
 	public static void printScore(PokerHand score) {
 		if(score.equals(PokerHand.NONE))
 			System.out.print("player loses ");
@@ -227,12 +259,18 @@ public class Cmd {
 		
 		System.out.println("and his credit is " + Main.credit.toString());
 	}
-	
+	/**
+	 * adds hand to the statistics table
+	 * @param h
+	 */
 	private static void addToStats(PokerHand h) {
 		Cmd.stats[h.ordinal()]++;
 		Cmd.stats[12]++;
 	}
-	
+	/**
+	 * updates player credits given the hand
+	 * @param score
+	 */
 	private static void updateCredit(PokerHand score) {
 		if(score.equals(PokerHand.ROYAL_FLUSH)&&Hand.getBet().equals(5)) {
 			Main.credit += 4000;
